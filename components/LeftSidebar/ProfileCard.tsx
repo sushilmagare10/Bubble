@@ -15,11 +15,12 @@ const ProfileCard = () => {
                 {/* ProfilePic */}
 
                 <Image
-                    src="/avatar.jpg"
+                    src="/profile3.png"
                     alt='profilePic'
-                    className='rounded-full object-cover w-14 h-14 absolute left-0 right-0 m-auto -bottom-6 ring-1 ring-white z-10'
-                    width={56}
-                    height={56}
+                    className='rounded-full object-cover w-16 h-16 absolute left-0 right-0 m-auto -bottom-7 ring-1 ring-white z-10'
+                    width={64}
+                    height={64}
+                    quality={100}
                 />
 
             </div>
@@ -27,7 +28,7 @@ const ProfileCard = () => {
             <div className=' w-full flex flex-col justify-between items-center'>
                 <div className='text-lg font-semibold text-gray-700 mt-9'> Sushil Magare</div>
                 <div></div>
-                <Button className=' bg-orange-400 hover:bg-orange-600 w-full mt-4 font-semibold tracking-wide'>
+                <Button className='  w-full mt-4 font-semibold tracking-wide'>
                     Profile
                 </Button>
             </div>
