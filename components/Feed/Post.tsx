@@ -1,6 +1,9 @@
 import Image from 'next/image'
 import React from 'react'
 import { MdMoreHoriz } from "react-icons/md";
+import PostInteraction from './PostInteraction';
+import Comments from './Comments';
+
 
 const Post = () => {
     return (
@@ -33,9 +36,8 @@ const Post = () => {
                     Donec sit amet efficitur ante. Sed semper finibus malesuada. Sed non dolor nibh. Donec sit amet efficitur ante. Sed semper finibus malesuada. Sed non dolor nibh.
                 </p>
             </div>
-            <div className=' flex justify-between items-center'>
-
-            </div>
+            <PostInteraction />
+            <Comments />
         </div>
     )
 }
