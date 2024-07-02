@@ -9,7 +9,7 @@ import { BsCalendar2EventFill } from "react-icons/bs";
 
 const AddPost = () => {
     return (
-        <div className=' bg-card flex rounded-lg shadow-xl p-4 flex-col justify-center items-start gap-4'>
+        <div className=' bg-card flex rounded-lg shadow-xl p-4 flex-col border justify-center items-start gap-4'>
             <p className=' font-semibold text-gray-600 self-start text-sm'>Add Post</p>
             <div className=' flex gap-4 w-full justify-between items-center -mt-1'>
                 <Textarea placeholder='What&apos;s on your mind?' />

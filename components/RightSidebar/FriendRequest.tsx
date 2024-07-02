@@ -6,7 +6,7 @@ import { IoIosClose } from "react-icons/io";
 
 const FriendRequest = () => {
     return (
-        <div className=' flex flex-col justify-between w-full items-center bg-card gap-4 rounded-lg shadow-xl p-4'>
+        <div className=' flex flex-col justify-between w-full items-center bg-card border gap-4 rounded-lg shadow-xl p-4'>
             <div className=' flex w-full justify-between items-center text-sm font-medium p-2'>
                 <p className='text-gray-500'>Friend Requests</p>
                 <span className=' text-primary '>See All</span>

@@ -4,7 +4,7 @@ import { Button } from '../ui/button'
 
 const ProfileCard = () => {
     return (
-        <div className='flex flex-col justify-start items-center p-3 bg-card shadow-xl rounded-md h-64'>
+        <div className='flex flex-col justify-start items-center p-3 bg-card border shadow-xl rounded-md h-64'>
             <div className=' relative  h-1/2 w-full '>
                 <Image
                     src="/banner.jpg"

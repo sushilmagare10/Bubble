@@ -4,7 +4,7 @@ import { MdMoreHoriz } from "react-icons/md";
 
 const Ad = () => {
     return (
-        <div className=' flex w-full flex-col gap-4 bg-card shadow-xl rounded-lg p-4'>
+        <div className=' flex w-full flex-col gap-4 bg-card shadow-xl rounded-lg p-4 border'>
             <div className='w-full flex flex-col gap-3 justify-between items-center'>
                 <div className='flex w-full justify-between items-center gap-4'>
                     <span className=' text-sm font-semibold text-gray-500'>
