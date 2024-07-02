@@ -8,7 +8,7 @@ import { IoSettingsOutline } from "react-icons/io5";
 
 const LeftSidebarNav = () => {
     return (
-        <div className=' flex flex-col justify-center items-start gap-6 py-4 bg-card rounded-lg shadow-xl'>
+        <div className=' flex flex-col justify-center items-start gap-6 py-4 bg-card border rounded-lg shadow-xl'>
             <Link href='/posts' className='flex justify-around items-center gap-3 ml-6'>
                 <MdInsertPhoto className='text-blue-500 text-xl' />
                 <p className='text-sm font-medium'>My Posts</p>
