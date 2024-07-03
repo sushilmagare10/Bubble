@@ -6,6 +6,7 @@ import { GoPeople } from "react-icons/go";
 import { TbMessageDots } from "react-icons/tb";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import MobileMenu from './MobileMenu'
+import { ModeToggle } from '../theme-toggle';
 
 const Navbar = () => {
     return (
@@ -18,6 +19,7 @@ const Navbar = () => {
                 <div className='hidden xl:flex p-2 items-center rounded-lg'>
                     <Input type='text' placeholder='search...' className=' rounded-lg outline-none' />
                 </div>
+
                 <ClerkLoading>
                     <div className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-gray-500 border-solid border-current border-e-transparent align-[-0.125em] text-surface motion-reduce:animate-[spin_1.5s_linear_infinite] dark:text-white" />
                 </ClerkLoading>
@@ -41,6 +43,7 @@ const Navbar = () => {
                         </div>
                     </SignedOut>
                 </ClerkLoaded>
+                <ModeToggle />
                 <MobileMenu />
             </div>
         </div>
