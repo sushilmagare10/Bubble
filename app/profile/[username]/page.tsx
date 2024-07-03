@@ -48,7 +48,7 @@ const ProfilePage = ({ params }: { params: { username: string } }) => {
                     <Feed />
                 </div>
             </section>
-            <aside className="hidden lg:block w-[30%] h-full sticky top-4">
+            <aside className="hidden lg:block w-[30%] h-[calc(100vh-2rem)] sticky top-4 overflow-y-auto scrollbar-hide">
                 <RightSidebar userId='testId' />
             </aside>
         </main>
