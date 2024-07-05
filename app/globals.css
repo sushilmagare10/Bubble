@@ -61,10 +61,10 @@
     }
   }
 
-  .scrollbar-hide::-webkit-scrollbar{
+  .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
 
-.scrollbar-hide{
+.scrollbar-hide {
   scrollbar-width: none;
 }
