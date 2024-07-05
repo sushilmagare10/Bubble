@@ -6,9 +6,8 @@ import Ad from '../Ad'
 const LeftSidebar = () => {
     return (
         <div className='flex flex-col gap-6'>
-            <ProfileCard />
             <LeftSidebarNav />
-            <Ad />
+            <Ad size='sm' />
         </div>
     )
 }
