@@ -26,9 +26,9 @@ const ProfileCard = () => {
             </div>
             {/* user info */}
             <div className=' w-full flex flex-col justify-between items-center'>
-                <div className='text-lg font-semibold text-gray-700 mt-9'> Sushil Magare</div>
+                <div className='text-lg font-semibold mt-9'> Sushil Magare</div>
                 <div></div>
-                <Button className='  w-full mt-4 font-semibold tracking-wide'>
+                <Button className='w-full mt-4 bg-primary text-white font-semibold tracking-wide'>
                     Profile
                 </Button>
             </div>

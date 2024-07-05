@@ -3,7 +3,7 @@ import { Textarea } from '../ui/textarea'
 import Image from 'next/image'
 import { FaSquarePollHorizontal } from "react-icons/fa6";
 import { MdInsertPhoto } from "react-icons/md";
-import { GoVideo } from "react-icons/go";
+import { FaYoutube } from "react-icons/fa";
 import { BsCalendar2EventFill } from "react-icons/bs";
 
 
@@ -32,7 +32,7 @@ const AddPost = () => {
                     <span className='font-semibold text-gray-600'>
                         Video
                     </span>
-                    <GoVideo className=' text-rose-500 text-xl' />
+                    <FaYoutube className=' text-rose-500 text-xl' />
                 </div>
                 <div className=' flex justify-center items-center gap-2 cursor-pointer'>
                     <span className='font-semibold text-gray-600'>

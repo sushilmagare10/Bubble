@@ -24,7 +24,7 @@ const FriendRequest = () => {
                 </div>
                 <div className=' flex justify-between items-center gap-4'>
                     <span className='flex justify-center items-center w-6 h-6 rounded-full bg-primary hover:bg-primary/90 cursor-pointer'><FaCheck className=' text-white text-sm' /></span>
-                    <span className='flex justify-center items-center w-6 h-6 rounded-full bg-neutral-300 hover:bg-neutral-300/90 cursor-pointer'><IoIosClose className=' text-white text-xl' /></span>
+                    <span className='flex justify-center items-center w-6 h-6 rounded-full bg-neutral-300 hover:bg-neutral-300/90 dark:bg-neutral-700 dark:hover:bg-neutral-800 cursor-pointer'><IoIosClose className=' text-white text-xl' /></span>
                 </div>
             </div>
             <div className=' w-full flex justify-between items-center text-lg font-medium '>
@@ -40,7 +40,7 @@ const FriendRequest = () => {
                 </div>
                 <div className=' flex justify-between items-center gap-4'>
                     <span className='flex justify-center items-center w-6 h-6 rounded-full bg-primary hover:bg-primary/90 cursor-pointer'><FaCheck className=' text-white text-sm' /></span>
-                    <span className='flex justify-center items-center w-6 h-6 rounded-full bg-neutral-300 hover:bg-neutral-300/90 cursor-pointer'><IoIosClose className=' text-white text-xl' /></span>
+                    <span className='flex justify-center items-center w-6 h-6 rounded-full bg-neutral-300 hover:bg-neutral-300/90 dark:bg-neutral-700 dark:hover:bg-neutral-800 cursor-pointer'><IoIosClose className=' text-white text-xl' /></span>
                 </div>
             </div>
             <div className=' w-full flex justify-between items-center text-lg font-medium '>
@@ -56,7 +56,7 @@ const FriendRequest = () => {
                 </div>
                 <div className=' flex justify-between items-center gap-4'>
                     <span className='flex justify-center items-center w-6 h-6 rounded-full bg-primary hover:bg-primary/90 cursor-pointer'><FaCheck className=' text-white text-sm' /></span>
-                    <span className='flex justify-center items-center w-6 h-6 rounded-full bg-neutral-300 hover:bg-neutral-300/90 cursor-pointer'><IoIosClose className=' text-white text-xl' /></span>
+                    <span className='flex justify-center items-center w-6 h-6 rounded-full bg-neutral-300 hover:bg-neutral-300/90 dark:bg-neutral-700 dark:hover:bg-neutral-800 cursor-pointer'><IoIosClose className=' text-white text-xl' /></span>
                 </div>
             </div>
         </div>

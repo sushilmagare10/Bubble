@@ -7,7 +7,7 @@ import Comments from './Comments';
 
 const Post = () => {
     return (
-        <div className=' flex w-full flex-col gap-4 '>
+        <div className=' flex w-full flex-col gap-4 bg-card p-4 border rounded-lg'>
             <div className='w-full flex justify-between items-center p-2'>
                 <div className='flex justify-between items-center gap-4'>
                     <Image
