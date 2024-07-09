@@ -60,11 +60,8 @@ const UserInfoCard = async ({ user }: { user: User }) => {
 
     return (
         <div className=' flex flex-col justify-between items-center p-4 gap-5 bg-card border rounded-lg'>
-            <div className=' flex w-full justify-between items-center'>
+            <div className=' flex w-full self-start'>
                 <span className=' text-gray-400 font-semibold text-xs'>User Information</span>
-                <Link href='/seeAll' className=' text-primary text-xs'>
-                    see all
-                </Link>
             </div>
             <div className=' flex flex-col w-full gap-4'>
                 <div className=' flex justify-start items-center gap-2'>
