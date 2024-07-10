@@ -56,10 +56,13 @@ export const switchFollow = async (userId: string) => {
 
 
 export const switchBlock = async (userId: string) => {
+
     const { userId: currentUserId } = auth()
+
     if (!currentUserId) {
         throw new Error("User not Authenticated")
     }
+
     try {
         const existingBlock = await prisma.block.findFirst({
             where: {
@@ -88,3 +91,5 @@ export const switchBlock = async (userId: string) => {
         throw new Error("Something went wrong")
     }
 }
+
+
