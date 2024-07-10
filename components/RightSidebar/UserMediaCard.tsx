@@ -1,23 +1,8 @@
-import prisma from '@/lib/client'
 import { User } from '@prisma/client'
 import Image from 'next/image'
 import React from 'react'
 
-const UserMediaCard = async ({ user }: { user?: User }) => {
-
-    const postWithMedia = await prisma.post.findMany({
-        where: {
-            userId: user?.id,
-            img: {
-                not: null,
-            },
-        },
-        take: 8,
-        orderBy: {
-            createdAt: "desc"
-        }
-    })
-
+const UserMediaCard = ({ user }: { user?: User }) => {
     return (
         <div className='flex flex-col justify-center  p-4 gap-4 bg-card shadow-xl border'>
             <div className='flex justify-between items-center w-full'>
@@ -25,18 +10,77 @@ const UserMediaCard = async ({ user }: { user?: User }) => {
                 <span className=' text-primary text-sm'>See All</span>
             </div>
             <div className=' flex justify-between gap-4 flex-wrap'>
-                {postWithMedia.length ? postWithMedia.map(post => (
+                <div className=' relative w-1/5 h-24'>
+                    <Image
+                        src='/profile2.jpg'
+                        alt='pic'
+                        fill
+                        className=' rounded-md object-cover'
+                    />
+                </div>
+                <div className=' relative w-1/5 h-24'>
 
-                    <div className=' relative w-1/5 h-24' key={post.id}>
-                        <Image
-                            src={post.img!}
-                            alt='pic'
-                            fill
-                            className=' rounded-md object-cover'
-                        />
-                    </div>
-                ))
-                    : "No Media Found!"}
+                    <Image
+                        src='/profile3.png'
+                        alt='pic'
+                        fill
+                        className=' rounded-md object-cover'
+                    />
+                </div>
+                <div className=' relative w-1/5 h-24'>
+
+                    <Image
+                        src='/coding.jpg'
+                        alt='pic'
+                        fill
+                        className=' rounded-md object-cover'
+                    />
+                </div>
+                <div className=' relative w-1/5 h-24'>
+
+                    <Image
+                        src='/banner.jpg'
+                        alt='pic'
+                        fill
+                        className=' rounded-md object-cover'
+                    />
+                </div>
+                <div className=' relative w-1/5 h-24'>
+
+                    <Image
+                        src='/profile2.jpg'
+                        alt='pic'
+                        fill
+                        className=' rounded-md object-cover'
+                    />
+                </div>
+                <div className=' relative w-1/5 h-24'>
+
+                    <Image
+                        src='/profile3.png'
+                        alt='pic'
+                        fill
+                        className=' rounded-md object-cover'
+                    />
+                </div>
+                <div className=' relative w-1/5 h-24'>
+
+                    <Image
+                        src='/coding.jpg'
+                        alt='pic'
+                        fill
+                        className=' rounded-md object-cover'
+                    />
+                </div>
+                <div className=' relative w-1/5 h-24'>
+
+                    <Image
+                        src='/banner.jpg'
+                        alt='pic'
+                        fill
+                        className=' rounded-md object-cover'
+                    />
+                </div>
             </div>
         </div>
 
