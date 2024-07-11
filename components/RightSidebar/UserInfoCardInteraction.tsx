@@ -2,7 +2,8 @@
 
 import React, { useOptimistic, useState } from 'react'
 import { Button } from '../ui/button';
-import { switchBlock, switchFollow } from '@/lib/actions';
+import { switchFollow } from '@/lib/actions/switchFollow';
+import { switchBlock } from '@/lib/actions/switchBlock';
 
 const UserInfoCardInteraction = ({
     userId,

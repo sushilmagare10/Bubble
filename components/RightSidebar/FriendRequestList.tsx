@@ -1,12 +1,13 @@
 "use client"
 
-import { acceptFollowRequest, declineFollowRequest } from '@/lib/actions';
 import { FollowRequest, User } from '@prisma/client'
 import Image from 'next/image'
 import React, { useOptimistic, useState } from 'react'
 import { FaCheck } from "react-icons/fa6";
 import { IoIosClose } from "react-icons/io";
 import { Button } from '../ui/button';
+import { acceptFollowRequest } from '@/lib/actions/acceptFollowRequest';
+import { declineFollowRequest } from '@/lib/actions/declineFollowRequest';
 
 type RequestWithUser = FollowRequest & {
     sender: User
