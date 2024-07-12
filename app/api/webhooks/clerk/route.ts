@@ -84,7 +84,6 @@ export async function POST(req: Request) {
                 data: {
                     username: JSON.parse(body).data.username,
                     avatar: JSON.parse(body).data.image_url || "/profile2.jpg",
-                    cover: "/profile2.jpg"
                 }
             })
             return new Response("User has been updated",

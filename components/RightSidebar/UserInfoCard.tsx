@@ -9,6 +9,7 @@ import { User } from '@prisma/client';
 import prisma from '@/lib/client';
 import { auth } from '@clerk/nextjs/server';
 import UserInfoCardInteraction from './UserInfoCardInteraction';
+import UpdateUser from './UpdateUser';
 
 
 const UserInfoCard = async ({ user }: { user: User }) => {
@@ -23,45 +24,48 @@ const UserInfoCard = async ({ user }: { user: User }) => {
     let isUserBlocked = false;
     let isFollowing = false;
     let isFollowingSent = false;
-    let isOwnProfile = false;
 
     const { userId: currentUserId } = auth();
 
     if (currentUserId) {
-        isOwnProfile = currentUserId === user.id;
+        const blockRes = await prisma.block.findFirst({
+            where: {
+                blockerId: currentUserId,
+                blockedId: user.id,
+            },
+        });
 
-        if (!isOwnProfile) {
-            const blockRes = await prisma.block.findFirst({
-                where: {
-                    blockerId: currentUserId,
-                    blockedId: user.id,
-                },
-            });
+        blockRes ? (isUserBlocked = true) : (isUserBlocked = false);
+        const followRes = await prisma.follower.findFirst({
+            where: {
+                followerId: currentUserId,
+                followingId: user.id,
+            },
+        });
 
-            blockRes ? (isUserBlocked = true) : (isUserBlocked = false);
-            const followRes = await prisma.follower.findFirst({
-                where: {
-                    followerId: currentUserId,
-                    followingId: user.id,
-                },
-            });
+        followRes ? (isFollowing = true) : (isFollowing = false);
+        const followReqRes = await prisma.followRequest.findFirst({
+            where: {
+                senderId: currentUserId,
+                receiverId: user.id,
+            },
+        });
 
-            followRes ? (isFollowing = true) : (isFollowing = false);
-            const followReqRes = await prisma.followRequest.findFirst({
-                where: {
-                    senderId: currentUserId,
-                    receiverId: user.id,
-                },
-            });
+        followReqRes ? (isFollowingSent = true) : (isFollowingSent = false);
 
-            followReqRes ? (isFollowingSent = true) : (isFollowingSent = false);
-        }
     }
 
     return (
         <div className=' flex flex-col justify-between items-center p-4 gap-5 bg-card border rounded-lg'>
-            <div className=' flex w-full self-start'>
+            <div className=' flex justify-between w-full mt-2 self-start'>
                 <span className=' text-gray-400 font-semibold text-xs'>User Information</span>
+                {currentUserId === user.id ? (
+                    <UpdateUser user={user} />
+                ) : (
+                    <Link href="/" className="text-blue-500 text-xs">
+                        See all
+                    </Link>
+                )}
             </div>
             <div className=' flex flex-col w-full gap-4'>
                 <div className=' flex justify-start items-center gap-2'>
@@ -106,13 +110,7 @@ const UserInfoCard = async ({ user }: { user: User }) => {
                 </div>
             </div>
 
-            {isOwnProfile ? (
-                <Link href="/update-profile" className='w-full'>
-                    <Button className="w-full">
-                        Update Profile
-                    </Button>
-                </Link>
-            ) : currentUserId && (
+            {currentUserId && currentUserId !== user.id && (
                 <UserInfoCardInteraction
                     userId={user.id}
                     isUserBlocked={isUserBlocked}
