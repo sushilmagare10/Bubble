@@ -4,6 +4,7 @@ import { Button } from '../ui/button'
 import { auth } from '@clerk/nextjs/server'
 import prisma from '@/lib/client'
 import Link from 'next/link'
+import { Card, CardContent, CardTitle } from '../ui/card'
 
 const ProfileCard = async () => {
 
@@ -26,8 +27,8 @@ const ProfileCard = async () => {
     if (!user) return null
 
     return (
-        <div className='flex flex-col justify-start items-center p-3 bg-card border shadow-xl rounded-md h-64'>
-            <div className=' relative  h-1/2 w-full '>
+        <Card className='flex flex-col justify-start items-center p-3 dark:border-white/40 rounded-lg h-64'>
+            <CardContent className=' relative  h-1/2 w-full '>
                 <Image
                     src={user.cover || "/banner.jpg"}
                     alt="Banner"
@@ -45,20 +46,20 @@ const ProfileCard = async () => {
                     quality={100}
                 />
 
-            </div>
+            </CardContent>
             {/* user info */}
-            <div className=' w-full flex flex-col justify-between items-center'>
-                <h2 className='text-lg font-semibold mt-9'>
+            <CardContent className=' w-full flex p-0 flex-col justify-between items-center'>
+                <CardTitle className='text-lg font-semibold mt-9'>
                     {(user.name && user.lastname) ? user.name + " " + user.lastname : user.username}
-                </h2>
+                </CardTitle>
                 <div>{user._count.followers}</div>
                 <Link href={`/profile/${user.username}`} className=' w-full'>
                     <Button className='w-full mt-4 bg-primary text-white font-semibold tracking-wide'>
                         Profile
                     </Button>
                 </Link>
-            </div>
-        </div>
+            </CardContent>
+        </Card>
     )
 }
 

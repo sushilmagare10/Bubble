@@ -2,6 +2,7 @@ import prisma from '@/lib/client';
 import { User } from '@prisma/client'
 import Image from 'next/image'
 import React from 'react'
+import { Card, CardContent } from '../ui/card';
 
 const UserMediaCard = async ({ user }: { user: User }) => {
     const postsWithMedia = await prisma.post.findMany({
@@ -17,12 +18,12 @@ const UserMediaCard = async ({ user }: { user: User }) => {
         },
     });
     return (
-        <div className='flex flex-col justify-center  p-4 gap-4 bg-card shadow-xl border'>
-            <div className='flex justify-between items-center w-full'>
+        <Card className='flex flex-col justify-center  p-4 gap-4 dark:border-white/40'>
+            <CardContent className='flex justify-between p-0 items-center w-full'>
                 <span className='text-sm text-gray-400'>User Media</span>
                 <span className=' text-primary text-sm'>See All</span>
-            </div>
-            <div className=' flex justify-between gap-4 flex-wrap'>
+            </CardContent>
+            <CardContent className=' flex p-0 justify-between gap-4 flex-wrap'>
                 {postsWithMedia.length
                     ? postsWithMedia.map((post) => (
                         <div className="relative w-1/5 h-24" key={post.id}>
@@ -35,8 +36,8 @@ const UserMediaCard = async ({ user }: { user: User }) => {
                         </div>
                     ))
                     : "No media found!"}
-            </div>
-        </div>
+            </CardContent>
+        </Card>
 
     )
 }

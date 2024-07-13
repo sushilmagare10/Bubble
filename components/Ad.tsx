@@ -1,20 +1,22 @@
 import Image from 'next/image'
 import React from 'react'
 import { MdMoreHoriz } from "react-icons/md";
+import { Card, CardContent, CardDescription, CardTitle } from './ui/card';
+import { Button } from './ui/button';
 
 const Ad = ({ size }: { size: "sm" | "md" | "lg" }) => {
     return (
-        <div className=' flex w-full flex-col gap-4 bg-card shadow-xl rounded-lg p-4 border'>
-            <div className='w-full flex flex-col gap-3 justify-between items-center'>
+        <Card className=' flex w-full flex-col gap-4 bg-card rounded-lg p-4 dark:border-white/40'>
+            <CardContent className='w-full flex flex-col gap-3 p-0 justify-between items-center'>
                 <div className='flex w-full justify-between items-center gap-4'>
-                    <span className=' text-sm font-semibold text-gray-500'>
+                    <CardDescription className=' text-sm font-semibold text-gray-500'>
                         Sponsored Ad
-                    </span>
+                    </CardDescription>
                     <MdMoreHoriz className='text-2xl' />
                 </div>
-            </div>
-            <div
-                className={`flex flex-col mt-4 ${size === "sm" ? "gap-2" : "gap-4"}`}
+            </CardContent>
+            <CardContent
+                className={`flex flex-col p-0 mt-4 ${size === "sm" ? "gap-2" : "gap-4"}`}
             >
                 <div
                     className={`relative w-full ${size === "sm" ? "h-24" : size === "md" ? "h-36" : "h-48"
@@ -35,20 +37,20 @@ const Ad = ({ size }: { size: "sm" | "md" | "lg" }) => {
                         height={24}
                         className="rounded-full w-6 h-6 object-contain"
                     />
-                    <span className="text-blue-500 font-medium">Macbook M3</span>
+                    <CardTitle className="text-primary self-start font-medium">Macbook M3</CardTitle>
                 </div>
-                <p className={size === "sm" ? "text-xs" : "text-sm"}>
+                <CardDescription className={size === "sm" ? "text-xs" : "text-sm"}>
                     {size === "sm"
                         ? "Lorem ipsum dolor sit amet consectetur adipisicing elit."
                         : size === "md"
                             ? "Lorem ipsum dolor sit amet consectetur adipisicing elit.  Lorem ipsum dolor sit amet consectetur adipisicing elit."
                             : "Lorem ipsum dolor sit amet consectetur adipisicing elit.  Lorem ipsum dolor sit amet consectetur adipisicing elit.  Lorem ipsum dolor sit amet consectetur adipisicing elit."}
-                </p>
-                <button className="bg-gray-200 text-gray-500 p-2 text-xs rounded-lg">
+                </CardDescription>
+                <Button className=" mt-2 " variant='outline'>
                     Learn more
-                </button>
-            </div>
-        </div>
+                </Button>
+            </CardContent>
+        </Card>
     )
 }
 
