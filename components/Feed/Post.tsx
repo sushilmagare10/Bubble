@@ -3,42 +3,61 @@ import React from 'react'
 import { MdMoreHoriz } from "react-icons/md";
 import PostInteraction from './PostInteraction';
 import Comments from './Comments';
+import { Card, CardContent, CardDescription, CardTitle } from '../ui/card';
+import { Post as PostType, User } from '@prisma/client';
+import { auth } from '@clerk/nextjs/server';
+
+type FeedPostType = PostType & { user: User } & {
+    likes: [{ userId: string }];
+} & {
+    _count: { comments: number };
+};
 
 
-const Post = () => {
+const Post = ({ post }: { post: FeedPostType }) => {
+    const { userId } = auth();
     return (
-        <div className=' flex w-full flex-col gap-4 bg-card p-4 border rounded-lg'>
-            <div className='w-full flex justify-between items-center p-2'>
+        <Card className=' flex w-full flex-col gap-4 p-4 border dark:border-white/40 rounded-lg'>
+            <CardContent className='w-full flex justify-between items-center '>
                 <div className='flex justify-between items-center gap-4'>
                     <Image
-                        src='/profile3.png'
+                        src={post.user.avatar || "/noAvatar.png"}
                         alt='ProfilePic'
-                        width={56}
-                        height={56}
-                        className=' rounded-full object-cover w-14 h-14 '
+                        width={48}
+                        height={48}
+                        className=' rounded-full object-cover w-12 h-12 '
                     />
-                    <span className=' text-xl font-semibold text-gray-600'>
-                        John Doe
-                    </span>
+                    <CardTitle >
+                        {post.user.name && post.user.lastname
+                            ? post.user.name + " " + post.user.lastname
+                            : post.user.username
+                        }
+                    </CardTitle>
                 </div>
                 <MdMoreHoriz className='text-2xl' />
-            </div>
-            <div className=' flex flex-col gap-4'>
-                <div className=' relative min-h-96 w-full'>
-                    <Image
-                        src='/coding.jpg'
-                        alt='post'
-                        fill
-                        className=' object-cover rounded-lg'
-                    />
-                </div>
-                <p className='text-gray-500 text-sm '>
-                    Donec sit amet efficitur ante. Sed semper finibus malesuada. Sed non dolor nibh. Donec sit amet efficitur ante. Sed semper finibus malesuada. Sed non dolor nibh.
-                </p>
-            </div>
-            <PostInteraction />
-            <Comments />
-        </div>
+            </CardContent>
+            <CardContent className=' flex flex-col gap-4'>
+                {post.img && (
+                    <div className="w-full min-h-96 relative">
+                        <Image
+                            src={post.img}
+                            fill
+                            className="object-cover rounded-md"
+                            alt=""
+                        />
+                    </div>
+                )}
+                <CardDescription>
+                    {post.description}
+                </CardDescription>
+            </CardContent>
+            <PostInteraction
+                postId={post.id}
+                likes={post.likes.map((like) => like.userId)}
+                commentNumber={post._count.comments}
+            />
+            <Comments postId={post.id} />
+        </Card>
     )
 }
 

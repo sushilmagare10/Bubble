@@ -89,7 +89,7 @@ const ProfilePage = async ({ params }: { params: { username: string } }) => {
                             </div>
                         </div>
                     </div>
-                    <Feed />
+                    <Feed username={user.username} />
                 </div>
             </section>
             <aside className="hidden lg:block w-[30%] h-[calc(100vh-2rem)] sticky top-4 overflow-y-auto scrollbar-hide">

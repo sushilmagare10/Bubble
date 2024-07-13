@@ -10,6 +10,7 @@ import prisma from '@/lib/client';
 import { auth } from '@clerk/nextjs/server';
 import UserInfoCardInteraction from './UserInfoCardInteraction';
 import UpdateUser from './UpdateUser';
+import { Card, CardContent, CardDescription } from '../ui/card';
 
 
 const UserInfoCard = async ({ user }: { user: User }) => {
@@ -56,9 +57,9 @@ const UserInfoCard = async ({ user }: { user: User }) => {
     }
 
     return (
-        <div className=' flex flex-col justify-between items-center p-4 gap-5 bg-card border rounded-lg'>
-            <div className=' flex justify-between w-full mt-2 self-start'>
-                <span className=' text-gray-400 font-semibold text-xs'>User Information</span>
+        <Card className=' flex flex-col justify-between items-center p-4 gap-5 dark:border-white/40 rounded-lg'>
+            <CardContent className=' flex justify-between w-full p-0 mt-2 self-start'>
+                <CardDescription className=' text-gray-400 font-semibold text-xs'>User Information</CardDescription>
                 {currentUserId === user.id ? (
                     <UpdateUser user={user} />
                 ) : (
@@ -66,10 +67,10 @@ const UserInfoCard = async ({ user }: { user: User }) => {
                         See all
                     </Link>
                 )}
-            </div>
-            <div className=' flex flex-col w-full gap-4'>
+            </CardContent>
+            <CardContent className=' flex p-0 flex-col w-full gap-4'>
                 <div className=' flex justify-start items-center gap-2'>
-                    <p className=' text-xl text-gray-800 font-bold'>
+                    <p className=' text-xl text-gray-800 dark:text-gray-300 font-bold'>
                         {" "}  {(user.name && user.lastname) ? user.name + " " + user.lastname : user.username}
                     </p>
                     <p className=' text-sm font-medium text-gray-400'>@{user.username}</p>
@@ -80,25 +81,25 @@ const UserInfoCard = async ({ user }: { user: User }) => {
                         <div className=' flex justify-start text-gray-400 items-center gap-2'>
                             <IoLocation />
                             Living in
-                            <span className='text-gray-800 font-bold'>{user.city}</span>
+                            <span className='text-gray-800 dark:text-gray-300 font-bold'>{user.city}</span>
                         </div>
                     )}
                     {user.school && (
                         <div className=' flex justify-start text-gray-400 items-center gap-2'>
                             <FaGraduationCap />
                             Went to
-                            <span className='text-gray-800 font-bold'>{user.school}</span>
+                            <span className='text-gray-800 dark:text-gray-300 font-bold'>{user.school}</span>
                         </div>
                     )}
                     {user.work && (
                         <div className=' flex justify-start text-gray-400 items-center gap-2'>
                             <MdWork />
                             Works at
-                            <span className='text-gray-800 font-bold'>{user.work}</span>
+                            <span className='text-gray-800 dark:text-gray-300 font-bold'>{user.work}</span>
                         </div>
                     )}
                 </div>
-            </div>
+            </CardContent>
             <div className='flex w-full justify-between items-center text-sm'>
                 <Link href='/' className=' flex justify-between items-center gap-2 font-medium text-primary'>
                     <FaLink className=' fill-gray-400' />
@@ -118,7 +119,7 @@ const UserInfoCard = async ({ user }: { user: User }) => {
                     isFollowingSent={isFollowingSent}
                 />
             )}
-        </div>
+        </Card>
     )
 }
 

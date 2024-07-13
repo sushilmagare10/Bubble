@@ -1,13 +1,14 @@
 "use client"
 
 import { User } from '@prisma/client'
-import React, { useState } from 'react'
+import React, { useActionState, useState } from 'react'
 import { Button } from '../ui/button'
 import Image from 'next/image'
 import { Input } from '../ui/input'
 import { Textarea } from '../ui/textarea'
 import { updateProfile } from '@/lib/actions/updateProfile'
 import { CldUploadWidget } from 'next-cloudinary';
+import UpdateButton from './UpdateButton'
 
 
 const UpdateUser = ({ user }: { user: User }) => {
@@ -17,6 +18,9 @@ const UpdateUser = ({ user }: { user: User }) => {
 
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false)
+
+    const [state, formAction] = useActionState(updateProfile, { success: false, error: false });
+
 
     return (
         <>
@@ -30,7 +34,9 @@ const UpdateUser = ({ user }: { user: User }) => {
                             X
                         </Button>
                         <form
-                            action={(formData) => updateProfile(formData, cover)}
+                            action={(formData) =>
+                                formAction({ formData, cover: cover || "" })
+                            }
                             className="flex flex-col gap-4">
                             <h2 className="text-xl font-bold mb-4 -mt-7">Update Profile</h2>
                             {/* Add your form fields here */}
@@ -115,9 +121,13 @@ const UpdateUser = ({ user }: { user: User }) => {
                                         <Textarea rows={5} cols={70} name='description' placeholder={user.description || "Your Description"} />
                                     </div>
                                 </div>
-                                <Button className=' mt-2'>
-                                    Update Profile
-                                </Button>
+                                <UpdateButton />
+                                {state.success && (
+                                    <span className="text-green-500">Profile has been updated!</span>
+                                )}
+                                {state.error && (
+                                    <span className="text-red-500">Something went wrong!</span>
+                                )}
                             </div>
                         </form>
 

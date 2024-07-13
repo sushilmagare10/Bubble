@@ -4,14 +4,13 @@ import { z } from 'zod'
 import prisma from '../client'
 import { auth } from '@clerk/nextjs/server'
 
-export const updateProfile = async (formData: FormData, cover: string) => {
+export const updateProfile = async (
+    prevState: { success: boolean; error: boolean },
+    payload: { formData: FormData; cover: string }
+) => {
 
-    const { userId } = auth()
 
-    if (!userId) {
-        throw new Error("User not Authenticated!")
-    }
-
+    const { formData, cover } = payload;
     const fields = Object.fromEntries(formData)
 
     const filterFields = Object.fromEntries(
@@ -31,12 +30,20 @@ export const updateProfile = async (formData: FormData, cover: string) => {
         city: z.string().max(60).optional(),
     })
 
-    const validatedFeilds = Profile.safeParse({ ...filterFields, cover })
+    const validatedFeilds = Profile.safeParse({ cover, ...filterFields })
 
     if (!validatedFeilds.success) {
         console.log(validatedFeilds.error.flatten().fieldErrors)
-        return "err"
+        return { success: false, error: true };
     }
+
+
+    const { userId } = auth()
+
+    if (!userId) {
+        return { success: false, error: true };
+    }
+
 
     try {
         await prisma.user.update({
@@ -45,7 +52,9 @@ export const updateProfile = async (formData: FormData, cover: string) => {
             },
             data: validatedFeilds.data
         })
+        return { success: true, error: false };
     } catch (error) {
         console.log(error)
+        return { success: false, error: true };
     }
 }
