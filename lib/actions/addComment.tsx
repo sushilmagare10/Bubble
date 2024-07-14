@@ -4,7 +4,7 @@ import { auth } from "@clerk/nextjs/server"
 import prisma from "../client"
 
 
-export const addComment = async (postId: number, description: string) => {
+export const addComment = async (postId: number, desc: string) => {
 
     const { userId } = auth()
 
