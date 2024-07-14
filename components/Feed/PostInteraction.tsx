@@ -5,7 +5,7 @@ import React, { useOptimistic, useState } from 'react'
 import { FaHeart, FaRegHeart, FaRegComment } from "react-icons/fa6";
 import { BsFillSendFill } from "react-icons/bs";
 import { useAuth } from '@clerk/nextjs';
-
+import { switchLike } from '@/lib/actions/switchLike';
 
 const PostInteraction = (
     {
@@ -37,7 +37,7 @@ const PostInteraction = (
     const likeAction = async () => {
         switchOptimistiLike("")
         try {
-            switchOptimistiLike(postId)
+            switchLike(postId)
             setLikesState((state) => ({
                 likeCount: state.isLiked ? state.likeCount - 1 : state.likeCount + 1,
                 isLiked: !state.isLiked
