@@ -6,7 +6,7 @@ import { Button } from './ui/button';
 
 const Ad = ({ size }: { size: "sm" | "md" | "lg" }) => {
     return (
-        <Card className=' flex w-full flex-col gap-4 bg-card rounded-lg p-4 dark:border-white/40'>
+        <Card className=' flex w-full flex-col gap-4 shadow-md rounded-lg p-4 dark:border-white/40'>
             <CardContent className='w-full flex flex-col gap-3 p-0 justify-between items-center'>
                 <div className='flex w-full justify-between items-center gap-4'>
                     <CardDescription className=' text-sm font-semibold text-gray-500'>
