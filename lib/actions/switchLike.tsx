@@ -1,40 +1,35 @@
-"use server"
-
-import { auth } from "@clerk/nextjs/server"
-import prisma from "../client"
+import { auth } from "@clerk/nextjs/server";
+import prisma from "../client";
 
 export const switchLike = async (postId: number) => {
+    const { userId } = auth();
 
-    const { userId } = auth()
-
-    if (!userId) {
-        throw new Error("User is not Authenticated!")
-    }
+    if (!userId) throw new Error("User is not authenticated!");
 
     try {
         const existingLike = await prisma.like.findFirst({
             where: {
                 postId,
-                userId
-            }
-        })
+                userId,
+            },
+        });
 
         if (existingLike) {
             await prisma.like.delete({
                 where: {
-                    id: existingLike.id
-                }
-            })
+                    id: existingLike.id,
+                },
+            });
         } else {
             await prisma.like.create({
                 data: {
                     postId,
-                    userId
-                }
-            })
+                    userId,
+                },
+            });
         }
-    } catch (error) {
-        console.log(error)
-        throw new Error("Something went wrong!")
+    } catch (err) {
+        console.log(err);
+        throw new Error("Something went wrong");
     }
-}
+};
