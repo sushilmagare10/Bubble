@@ -109,7 +109,7 @@ const CommentList = (
                                 <MdMoreHoriz className='text-xl' />
                             </div>
                             <p className='text-xs font-medium'>
-                                {comment.description}
+                                {comment.desc}
                             </p>
                             <div className=' flex justify-start text-xs items-center gap-4'>
                                 <div className=' flex items-center gap-4 bg-secondary py-1 px-3 rounded-full'>

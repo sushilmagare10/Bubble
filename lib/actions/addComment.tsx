@@ -15,7 +15,7 @@ export const addComment = async (postId: number, description: string) => {
     try {
         const createdComment = await prisma.comment.create({
             data: {
-                description,
+                desc,
                 userId,
                 postId
             },
