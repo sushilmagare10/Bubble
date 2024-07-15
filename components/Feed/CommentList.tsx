@@ -9,6 +9,10 @@ import { FaRegHeart } from 'react-icons/fa6'
 import { Comment, User } from '@prisma/client'
 import { useUser } from '@clerk/nextjs'
 import { addComment } from '@/lib/actions/addComment'
+import Picker from '@emoji-mart/react'
+import data from '@emoji-mart/data'
+
+import { useTheme } from 'next-themes'
 
 type CommentWithUser = Comment & { user: User };
 
@@ -25,7 +29,19 @@ const CommentList = (
     const { user } = useUser()
 
     const [commentState, setCommentState] = useState(comments)
-    const [desc, setdesc] = useState('')
+    const [desc, setDesc] = useState('')
+    const [showEmoji, setShowEmoji] = useState(false)
+    const { theme, systemTheme } = useTheme()
+
+    const addEmoji = (e: any) => {
+        const sym = e.unified.split("_");
+        const codeArray: number[] = sym.map((el: string) => parseInt("0x" + el, 16));
+        let emoji = String.fromCodePoint(...codeArray);
+        setDesc(desc + emoji);
+    };
+
+    const currentTheme = theme === 'system' ? systemTheme : theme
+
 
     const add = async () => {
         if (!user || !desc) return;
@@ -73,12 +89,12 @@ const CommentList = (
                         height={36}
                         className='w-9 h-9 object-cover rounded-full'
                     />
-                    <form action={add} className='flex-1 flex items-center justify-between bg-secondary rounded-full text-sm px-6  w-full'>
+                    <form action={add} className=' relative flex-1 flex items-center justify-between bg-secondary rounded-full text-sm px-6  w-full'>
                         <Input
                             type='text'
                             placeholder='Write a comment...'
                             className='bg-transparent outline-none flex-1 ring-0 border-none focus-visible:ring-none'
-                            onChange={e => setdesc(e.target.value)}
+                            onChange={e => setDesc(e.target.value)}
                         />
                         <Image
                             src="/emoji.png"
@@ -87,6 +103,17 @@ const CommentList = (
                             height={16}
                             className="cursor-pointer"
                         />
+                        {showEmoji && (
+                            <div className=' absolute top-40 right-7 md:right-0 '>
+                                <Picker
+                                    data={data}
+                                    emojiSize={20}
+                                    onEmojiSelect={addEmoji}
+                                    maxFrequentRows={2}
+                                    theme={currentTheme === "dark" ? 'dark' : "light"}
+                                />
+                            </div>
+                        )}
                     </form>
                 </div>
 

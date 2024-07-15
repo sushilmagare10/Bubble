@@ -29,15 +29,8 @@ const Ad = ({ size }: { size: "sm" | "md" | "lg" }) => {
                         className="rounded-lg object-contain"
                     />
                 </div>
-                <div className="flex items-center gap-4">
-                    <Image
-                        src="/macbook.webp"
-                        alt=""
-                        width={24}
-                        height={24}
-                        className="rounded-full w-6 h-6 object-contain"
-                    />
-                    <CardTitle className="text-primary self-start font-medium">Macbook M3</CardTitle>
+                <div className="flex items-center flex-wrap gap-4">
+                    <CardTitle className="text-primary text-sm md:text-lg self-start text-wrap font-medium">Macbook M3</CardTitle>
                 </div>
                 <CardDescription className={size === "sm" ? "text-xs" : "text-sm"}>
                     {size === "sm"
