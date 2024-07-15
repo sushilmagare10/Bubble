@@ -43,7 +43,7 @@ const AddPost = () => {
         <Card className=' flex rounded-lg  p-4 dark:border-white/40 flex-col border justify-center items-start gap-4'>
             <CardTitle className=' font-semibold self-start text-sm'>Add Post</CardTitle>
             <CardContent className=' relative flex gap-4 p-0 w-full justify-between items-center -mt-1'>
-                <form action={(formData) => addPost(formData, img || "")}>
+                <form className='flex w-full gap-4' action={(formData) => addPost(formData, img || "")}>
                     <Textarea
                         rows={4}
                         value={desc}
