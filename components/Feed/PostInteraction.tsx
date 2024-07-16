@@ -68,7 +68,7 @@ const PostInteraction = (
                     <div className=' flex items-center gap-4 bg-secondary py-2 px-4 rounded-full'>
                         <FaRegComment className=' fill-primary' />
                         <span className='text-gray-300'>|</span>
-                        <span className=' text-gray-500'>23<span className=' hidden md:inline ml-2'>Comments</span></span>
+                        <span className=' text-gray-500'>{commentNumber}<span className=' hidden md:inline ml-2'>Comments</span></span>
                     </div>
                 </div>
             </div>
