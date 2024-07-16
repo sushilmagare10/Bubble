@@ -80,8 +80,8 @@ const CommentList = (
 
     return (
         <>
-            {user && (<div className=''>
-                <div className=' flex justify-between items-center p-4 gap-4'>
+            {user && (<div className='relative -mt-4'>
+                <div className='  flex justify-between items-center p-4 gap-4'>
                     <Image
                         src={user?.imageUrl || '/avatar.jpg'}
                         alt='ProfilePic'
@@ -89,9 +89,10 @@ const CommentList = (
                         height={36}
                         className='w-9 h-9 object-cover rounded-full'
                     />
-                    <form action={add} className=' relative flex-1 flex items-center justify-between bg-secondary rounded-full text-sm px-6  w-full'>
+                    <form action={add} className=' flex-1 flex items-center justify-between bg-secondary rounded-full text-sm px-6  w-full'>
                         <Input
                             type='text'
+                            value={desc}
                             placeholder='Write a comment...'
                             className='bg-transparent outline-none flex-1 ring-0 border-none focus-visible:ring-none'
                             onChange={e => setDesc(e.target.value)}
@@ -102,9 +103,10 @@ const CommentList = (
                             width={16}
                             height={16}
                             className="cursor-pointer"
+                            onClick={() => setShowEmoji(!showEmoji)}
                         />
                         {showEmoji && (
-                            <div className=' absolute top-40 right-7 md:right-0 '>
+                            <div className=' z-20 absolute bottom-[95%] right-5 md:right-0 '>
                                 <Picker
                                     data={data}
                                     emojiSize={20}
@@ -118,7 +120,7 @@ const CommentList = (
                 </div>
 
                 {optimistcComments.map((comment) => (
-                    <div className=' flex justify-between gap-4 p-4 -mt-4' key={comment.id}>
+                    <div className=' flex gap-4 px-6 py-4 -mt-4' key={comment.id}>
                         <Image
                             src={comment.user.avatar || '/avatar.jpg'}
                             alt={comment.user.username}
@@ -126,7 +128,7 @@ const CommentList = (
                             height={40}
                             className='w-10 h-10 object-cover rounded-full'
                         />
-                        <div className=' flex flex-col justify-center gap-2 text-gray-500'>
+                        <div className=' flex flex-col self-start justify-center gap-2 text-gray-500'>
                             <div className=' w-full flex justify-between items-center'>
                                 <span className=' text-base font-semibold self-start'>
                                     {comment.user.name && comment.user.lastname
