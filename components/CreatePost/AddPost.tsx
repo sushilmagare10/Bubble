@@ -16,6 +16,7 @@ import { CldUploadWidget } from 'next-cloudinary';
 
 import { useTheme } from 'next-themes'
 import { addPost } from '@/lib/actions/addPost';
+import AddPostButton from './AddPostButton';
 
 
 const AddPost = () => {
@@ -71,6 +72,7 @@ const AddPost = () => {
                             />
                         </CardContent>
                     )}
+                    <AddPostButton />
                 </form>
             </CardContent>
             <CardContent className=' flex justify-between p-0 items-center gap-8'>
