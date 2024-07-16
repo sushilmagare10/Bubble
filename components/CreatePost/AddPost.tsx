@@ -53,26 +53,29 @@ const AddPost = () => {
                         placeholder='What&apos;s on your mind?'
                         onChange={(e) => setDesc(e.target.value)}
                     />
-                    <Image
-                        src='/emoji.png'
-                        alt='emoji'
-                        width={20}
-                        height={20}
-                        className="w-5 h-5 cursor-pointer self-end"
-                        onClick={() => setShowEmoji(!showEmoji)}
-                    />
-                    {showEmoji && (
-                        <CardContent className=' absolute top-40 right-7 md:right-0 '>
-                            <Picker
-                                data={data}
-                                emojiSize={20}
-                                onEmojiSelect={addEmoji}
-                                maxFrequentRows={2}
-                                theme={currentTheme === "dark" ? 'dark' : "light"}
-                            />
-                        </CardContent>
-                    )}
-                    <AddPostButton />
+                    <div className=' flex flex-col gap-1 mt-4 justify-between'>
+
+                        <Image
+                            src='/emoji.png'
+                            alt='emoji'
+                            width={20}
+                            height={20}
+                            className="w-5 h-5 cursor-pointer "
+                            onClick={() => setShowEmoji(!showEmoji)}
+                        />
+                        {showEmoji && (
+                            <CardContent className=' z-20 absolute top-40 right-7 md:right-0 '>
+                                <Picker
+                                    data={data}
+                                    emojiSize={20}
+                                    onEmojiSelect={addEmoji}
+                                    maxFrequentRows={2}
+                                    theme={currentTheme === "dark" ? 'dark' : "light"}
+                                />
+                            </CardContent>
+                        )}
+                        <AddPostButton />
+                    </div>
                 </form>
             </CardContent>
             <CardContent className=' flex justify-between p-0 items-center gap-8'>
