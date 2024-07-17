@@ -108,6 +108,7 @@ model Block {
 model Story {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
+  expiresAt DateTime
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String
   img       String
