@@ -68,7 +68,7 @@ const StoryItem = ({
     return (
         <>
             <CldUploadWidget
-                uploadPreset="social"
+                uploadPreset="Bubble_social"
                 onSuccess={(result, { widget }) => {
                     setImg(result.info);
                     widget.close();
@@ -79,14 +79,15 @@ const StoryItem = ({
                         <div className="flex flex-col items-center gap-2 cursor-pointer relative">
                             <div className="relative w-20 h-20">
                                 <Image
-                                    src={img?.secure_url || user?.imageUrl || "/avatar.avatar"}
+                                    src={img?.secure_url || user?.imageUrl || "/avatar.jpg"}
                                     alt=""
                                     width={80}
                                     height={80}
                                     className="w-20 h-20 rounded-full ring-2 object-cover"
-                                    onClick={() => open()}
+
                                 />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent rounded-full" />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent rounded-full"
+                                    onClick={() => open()} />
                             </div>
                             {img ? (
                                 <form action={add}>
