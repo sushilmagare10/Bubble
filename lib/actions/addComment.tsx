@@ -2,7 +2,6 @@
 
 import { auth } from "@clerk/nextjs/server"
 import prisma from "../client"
-import { createNotification } from "./fetchNotification"
 
 
 export const addComment = async (postId: number, desc: string) => {
@@ -30,7 +29,6 @@ export const addComment = async (postId: number, desc: string) => {
             }
         })
 
-        // Create notification
         await prisma.notification.create({
             data: {
                 type: "COMMENT",
