@@ -37,6 +37,19 @@ model User {
   blocksSent            Block[]         @relation("BlockSent")
   blockReceived         Block[]         @relation("BlockReceived")
   stories               Story[]
+  notifications         Notification[]
+}
+
+model Notification {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  type      String
+  content   String
+  avatar    String?
+  msg       String
+  isRead    Boolean  @default(false)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
 }
 
 model Post {

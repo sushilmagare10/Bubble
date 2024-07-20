@@ -1,14 +1,56 @@
+"use client"
+
 import Link from 'next/link'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Input } from '../ui/input'
-import { ClerkLoaded, ClerkLoading, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
+import { ClerkLoaded, ClerkLoading, SignedIn, SignedOut, useAuth, UserButton } from '@clerk/nextjs'
 import { GoPeople } from "react-icons/go";
 import { TbMessageDots } from "react-icons/tb";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import MobileMenu from './MobileMenu'
 import { ModeToggle } from '../theme-toggle';
+import NotificationModal from '../NotificationModal';
+import { fetchNotifications, markNotificationAsRead } from '@/lib/actions/fetchNotification'
+import { Notification } from '@prisma/client'
 
 const Navbar = () => {
+
+    const [isNotificationModalOpen, setIsNotificationModalOpen] = useState(false)
+    const [notifications, setNotifications] = useState<Notification[]>([])
+
+    useEffect(() => {
+        const getNotifications = async () => {
+            try {
+                const fetchedNotifications = await fetchNotifications()
+                setNotifications(fetchedNotifications)
+            } catch (error) {
+                console.error("Failed to fetch notifications:", error)
+            }
+        }
+
+        getNotifications()
+    }, [])
+
+    const unreadNotificationsCount = notifications.filter(n => !n.isRead).length
+
+    const handleMarkAsRead = async (notificationId: string) => {
+        try {
+            await markNotificationAsRead(notificationId)
+            setNotifications(notifications.map(n =>
+                n.id === notificationId ? { ...n, isRead: true } : n
+            ))
+        } catch (error) {
+            console.error("Failed to mark notification as read:", error)
+        }
+    }
+    const { userId } = useAuth()
+
+    if (!userId) {
+        return <div>Loading...</div>;
+    }
+
+
+
     return (
         <div className=' flex justify-between items-center h-24 '>
             {/* left */}
@@ -31,9 +73,20 @@ const Navbar = () => {
                         <div className="cursor-pointer">
                             <TbMessageDots className=' text-primary text-2xl' />
                         </div>
-                        <div className="cursor-pointer">
+                        <div className="cursor-pointer relative" onClick={() => setIsNotificationModalOpen(true)}>
                             <IoMdNotificationsOutline className='text-primary text-2xl' />
+                            {unreadNotificationsCount > 0 && (
+                                <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
+                                    {unreadNotificationsCount}
+                                </span>
+                            )}
                         </div>
+                        <NotificationModal
+                            isOpen={isNotificationModalOpen}
+                            onClose={() => setIsNotificationModalOpen(false)}
+                            notifications={notifications}
+                            onMarkAsRead={handleMarkAsRead}
+                        />
                         <UserButton />
                     </SignedIn>
                     <SignedOut>
