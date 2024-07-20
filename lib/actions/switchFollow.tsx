@@ -45,9 +45,34 @@ export const switchFollow = async (userId: string) => {
                         receiverId: userId
                     }
                 })
+
+                const user = await prisma.user.findUnique({
+                    where: {
+                        id: currentUserId
+                    },
+                    select: {
+                        username: true,
+                        avatar: true
+                    }
+                })
+
+
+                if (user) {
+                    await prisma.notification.create({
+                        data: {
+                            type: "FOLLOW_REQUEST",
+                            avatar: user?.avatar,
+                            content: user?.username,
+                            msg: "sent you a follow request",
+                            userId: userId
+                        }
+                    })
+                } else {
+                    throw new Error("Something went wrong!")
+                }
             }
         }
-
+        return { success: true }
     } catch (error) {
         console.log(error)
         throw new Error("something went wrong!")
