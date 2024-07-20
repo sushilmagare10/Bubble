@@ -8,6 +8,7 @@ import { CldUploadWidget } from 'next-cloudinary';
 import Image from 'next/image'
 import React, { useOptimistic, useState } from 'react'
 import { Button } from '../ui/button';
+import StoryModal from './StoryModal';
 
 type StoryWithUser = Story & {
     user: User;
@@ -25,8 +26,17 @@ const StoryItem = ({
 
     const [storyItem, setStoryItem] = useState(stories);
     const [img, setImg] = useState<any>();
+    const [selectedStory, setSelectedStory] = useState<StoryWithUser | null>(null);
 
     const { user, isLoaded } = useUser();
+
+    const openStoryModal = (story: StoryWithUser) => {
+        setSelectedStory(story);
+    };
+
+    const closeStoryModal = () => {
+        setSelectedStory(null);
+    };
 
     const add = async () => {
         if (!img?.secure_url) return;
@@ -86,7 +96,7 @@ const StoryItem = ({
                                     className="w-20 h-20 rounded-full ring-2 object-cover"
 
                                 />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent rounded-full"
+                                <div className="absolute z-10 inset-0 bg-gradient-to-t from-black/50 to-transparent rounded-full"
                                     onClick={() => open()} />
                             </div>
                             {img ? (
@@ -98,7 +108,7 @@ const StoryItem = ({
                             ) : (
                                 <span className="font-semibold">Add a Story</span>
                             )}
-                            <div className="absolute text-4xl text-gray-200 top-[18px]">+</div>
+                            <div className="absolute z-0 text-4xl text-gray-200 top-[18px]">+</div>
                         </div>
                     );
                 }}
@@ -108,9 +118,10 @@ const StoryItem = ({
                 <div
                     className="flex flex-col items-center gap-2 cursor-pointer"
                     key={story.id}
+                    onClick={() => openStoryModal(story)}
                 >
                     <Image
-                        src={story.user.avatar || "/avatar.jpg"}
+                        src={story.img || "/avatar.jpg"}
                         alt=""
                         width={80}
                         height={80}
@@ -121,6 +132,13 @@ const StoryItem = ({
                     </span>
                 </div>
             ))}
+            {selectedStory && (
+                <StoryModal
+                    isOpen={!!selectedStory}
+                    onClose={closeStoryModal}
+                    story={selectedStory}
+                />
+            )}
         </>
     )
 }
