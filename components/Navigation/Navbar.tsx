@@ -52,9 +52,9 @@ const Navbar = () => {
 
 
     return (
-        <div className=' flex justify-between items-center h-24 '>
+        <div className=' flex w-full justify-between items-center h-24 '>
             {/* left */}
-            <div className='md:hidden lg:block font-bold text-lg md:text-xl lg:text-2xl 2xl:text-4xl text-primary w-[20%]'>Bubble</div>
+            <div className=' lg:block font-bold text-lg md:text-xl lg:text-2xl 2xl:text-4xl text-primary w-[20%]'>Bubble</div>
             {/* right */}
             <div className="w-[40%] flex items-center gap-4 xl:gap-8 justify-end">
                 {/* center */}

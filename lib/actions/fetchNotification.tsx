@@ -33,7 +33,17 @@ export const markNotificationAsRead = async (notificationId: string) => {
     try {
         await prisma.notification.update({
             where: { id: notificationId },
-            data: { isRead: true }
+            data: {
+                isRead: true,
+
+            },
+
+        })
+
+        await prisma.notification.delete({
+            where: {
+                id: notificationId,
+            }
         })
     } catch (error) {
         console.log(error)
