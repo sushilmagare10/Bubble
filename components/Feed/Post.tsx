@@ -1,11 +1,11 @@
 import Image from 'next/image'
 import React from 'react'
-import { MdMoreHoriz } from "react-icons/md";
 import PostInteraction from './PostInteraction';
 import Comments from './Comments';
 import { Card, CardContent, CardDescription, CardTitle } from '../ui/card';
 import { Post as PostType, User } from '@prisma/client';
 import { auth } from '@clerk/nextjs/server';
+import PostInfo from './PostInfo';
 
 type FeedPostType = PostType & { user: User } & {
     likes: [{ userId: string }];
@@ -34,7 +34,7 @@ const Post = ({ post }: { post: FeedPostType }) => {
                         }
                     </CardTitle>
                 </div>
-                <MdMoreHoriz className='text-2xl' />
+                {userId === post.user.id && <PostInfo postId={post.id} />}
             </CardContent>
             <CardContent className=' flex flex-col gap-4'>
                 {post.img && (
