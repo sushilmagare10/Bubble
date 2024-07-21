@@ -31,8 +31,14 @@ export const switchLike = async (postId: number) => {
             });
 
             const post = await prisma.post.findUnique({
-                where: { id: postId },
-                include: { user: true }
+                where: {
+                    id: postId,
+
+                },
+                select: {
+                    userId: true,
+                    img: true,
+                }
             });
 
             if (post && post.userId !== userId) {
@@ -51,7 +57,8 @@ export const switchLike = async (postId: number) => {
                             avatar: user.avatar,
                             content: user.username,
                             msg: "liked your post",
-                            userId: post.userId
+                            userId: post.userId,
+                            postImage: post.img
                         }
                     });
                 } else {

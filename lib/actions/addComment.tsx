@@ -23,22 +23,25 @@ export const addComment = async (postId: number, desc: string) => {
                 user: true,
                 post: {
                     select: {
-                        userId: true
+                        userId: true,
+                        img: true
                     }
                 }
             }
         })
 
-        await prisma.notification.create({
-            data: {
-                type: "COMMENT",
-                avatar: createdComment.user.avatar,
-                content: createdComment.user.username,
-                msg: "commented on your post",
-                userId: createdComment.post.userId
-            }
-        })
-
+        if (createdComment.post.userId !== userId) {
+            await prisma.notification.create({
+                data: {
+                    type: "COMMENT",
+                    avatar: createdComment.user.avatar,
+                    content: createdComment.user.username,
+                    msg: "commented on your post",
+                    userId: createdComment.post.userId,
+                    postImage: createdComment.post.img
+                }
+            })
+        }
         return createdComment
     } catch (error) {
         console.log(error)

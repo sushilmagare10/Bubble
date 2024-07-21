@@ -46,6 +46,7 @@ model Notification {
   type      String
   content   String
   avatar    String?
+  postImage String?
   msg       String
   isRead    Boolean  @default(false)
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
