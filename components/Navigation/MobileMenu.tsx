@@ -1,38 +1,43 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { IoMdHome, IoMdNotifications } from "react-icons/io";
+import { CgProfile } from "react-icons/cg";
+import { IoMdNotificationsOutline } from "react-icons/io";
+import { TbMessageDots, TbMessage } from "react-icons/tb";
+import { ClerkLoaded, ClerkLoading, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+
 
 const MobileMenu = () => {
-    const [isOpen, setIsOpen] = useState(false);
+
+
     return (
-        <div className="md:hidden">
-            <div
-                className="flex flex-col gap-[4.5px] cursor-pointer"
-                onClick={() => setIsOpen((prev) => !prev)}
+        <div className="md:hidden mx-auto sticky bottom-5 bg-card shadow-2xl rounded-lg border border-black/55 dark:border-white/40 w-[95%]">
+
+            <div className="flex justify-between items-center  py-4 px-6 w-full"
             >
-                <div
-                    className={`w-6 h-1 bg-blue-500 rounded-sm ${isOpen ? "rotate-45" : ""
-                        } origin-left ease-in-out duration-500`}
-                />
-                <div
-                    className={`w-6 h-1 bg-blue-500 rounded-sm ${isOpen ? "opacity-0" : ""
-                        } ease-in-out duration-500`}
-                />
-                <div
-                    className={`w-6 h-1 bg-blue-500 rounded-sm ${isOpen ? "-rotate-45" : ""
-                        } origin-left ease-in-out duration-500`}
-                />
-            </div>
-            <div
-                className={`absolute left-0 top-24 w-full h-[calc(100vh-96px)] bg-slate-50 flex transition-transform duration-300 ease-linear flex-col items-center justify-center gap-8 font-medium text-xl z-10 transform ${isOpen ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'}`}
-                style={{ pointerEvents: isOpen ? 'auto' : 'none' }}
-            >
-                <Link href="/">Home</Link>
-                <Link href="/">Friends</Link>
-                <Link href="/">Groups</Link>
-                <Link href="/">Stories</Link>
-                <Link href="/">Login</Link>
+                <Link href="/">
+                    <IoMdHome className="text-3xl" />
+                </Link>
+                <Link href="/">
+                    <TbMessage className="text-3xl" />
+                </Link>
+                <Link href="/">
+                    <CgProfile className="text-3xl" />
+                </Link>
+                <ClerkLoading>
+                    <div className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-gray-500 border-solid border-current border-e-transparent align-[-0.125em] text-surface motion-reduce:animate-[spin_1.5s_linear_infinite] dark:text-white" />
+                </ClerkLoading>
+                <ClerkLoaded>
+                    <SignedIn>
+                        <UserButton />
+                    </SignedIn>
+                    <SignedOut>
+                        <div className="flex items-center gap-2 text-sm">
+                            <Link href="/sign-in">Login/Register</Link>
+                        </div>
+                    </SignedOut>
+                </ClerkLoaded>
             </div>
         </div>
     );

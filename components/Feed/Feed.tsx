@@ -2,6 +2,7 @@ import React from 'react'
 import Post from './Post'
 import { auth } from '@clerk/nextjs/server'
 import prisma from '@/lib/client'
+import NoPosts from './NoPosts'
 
 const Feed = async ({ username }: { username?: string }) => {
 
@@ -77,7 +78,9 @@ const Feed = async ({ username }: { username?: string }) => {
         <div className=' bg-background mb-6 rounded-lg flex flex-col gap-11'>
             {posts.length ? (posts.map(post => (
                 <Post key={post.id} post={post} />
-            ))) : "No posts found!"}
+            ))) : (
+                <NoPosts />
+            )}
         </div>
     )
 }

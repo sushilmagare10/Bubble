@@ -7,7 +7,6 @@ import { ClerkLoaded, ClerkLoading, SignedIn, SignedOut, useAuth, UserButton } f
 import { GoPeople } from "react-icons/go";
 import { TbMessageDots } from "react-icons/tb";
 import { IoMdNotificationsOutline } from "react-icons/io";
-import MobileMenu from './MobileMenu'
 import { ModeToggle } from '../theme-toggle';
 import NotificationModal from '../NotificationModal';
 import { fetchNotifications, markNotificationAsRead } from '@/lib/actions/fetchNotification'
@@ -54,7 +53,9 @@ const Navbar = () => {
     return (
         <div className=' flex w-full justify-between items-center h-24 '>
             {/* left */}
-            <div className=' lg:block font-bold text-lg md:text-xl lg:text-2xl 2xl:text-4xl text-primary w-[20%]'>Bubble</div>
+            <Link href='/' className=' lg:block font-bold text-lg md:text-xl lg:text-2xl 2xl:text-4xl text-primary w-[20%]'>
+                Bubble
+            </Link>
             {/* right */}
             <div className="w-[40%] flex items-center gap-4 xl:gap-8 justify-end">
                 {/* center */}
@@ -67,10 +68,10 @@ const Navbar = () => {
                 </ClerkLoading>
                 <ClerkLoaded>
                     <SignedIn>
-                        <div className="cursor-pointer">
+                        <div className="hidden md:block cursor-pointer">
                             <GoPeople className='text-primary text-2xl' />
                         </div>
-                        <div className="cursor-pointer">
+                        <div className="hidden md:block cursor-pointer">
                             <TbMessageDots className=' text-primary text-2xl' />
                         </div>
                         <div className="cursor-pointer relative" onClick={() => setIsNotificationModalOpen(true)}>
@@ -87,17 +88,19 @@ const Navbar = () => {
                             notifications={notifications}
                             onMarkAsRead={handleMarkAsRead}
                         />
-                        <UserButton />
+                        <div className='hidden md:block'>
+
+                            <UserButton />
+                        </div>
                     </SignedIn>
                     <SignedOut>
                         <div className="flex items-center gap-2 text-sm">
-                            {/* <Image src="/login.png" alt="" width={20} height={20} /> */}
                             <Link href="/sign-in">Login/Register</Link>
                         </div>
                     </SignedOut>
                 </ClerkLoaded>
                 <ModeToggle />
-                <MobileMenu />
+
             </div>
         </div>
     )
