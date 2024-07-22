@@ -17,8 +17,8 @@ type FeedPostType = PostType & { user: User } & {
 const Post = ({ post }: { post: FeedPostType }) => {
     const { userId } = auth();
     return (
-        <Card className=' flex w-full flex-col gap-4 p-4 border dark:border-white/40 rounded-lg'>
-            <CardContent className='w-full flex justify-between items-center '>
+        <Card className=' flex w-full flex-col gap-4  border dark:border-white/40 rounded-lg'>
+            <CardContent className='w-full mt-6 flex justify-between items-center '>
                 <div className='flex justify-between items-center gap-4'>
                     <Image
                         src={post.user.avatar || "/noAvatar.png"}

@@ -68,7 +68,7 @@ const UserInfoCard = async ({ user }: { user: User }) => {
                     </Link>
                 )}
             </CardContent>
-            <CardContent className=' flex p-0 flex-col w-full gap-4'>
+            <CardContent className=' flex p-0 flex-col w-full gap-4 flex-wrap'>
                 <div className=' flex justify-start items-center gap-2'>
                     <p className=' text-xl text-gray-800 dark:text-gray-300 font-bold'>
                         {" "}  {(user.name && user.lastname) ? user.name + " " + user.lastname : user.username}

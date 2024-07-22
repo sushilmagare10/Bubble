@@ -53,7 +53,7 @@ const ProfilePage = async ({ params }: { params: { username: string } }) => {
                 <LeftSidebar type="profile" />
             </aside>
             <section className="w-full lg:w-[70%] xl:w-[50%]">
-                <div className="flex flex-col gap-8">
+                <div className="flex flex-col gap-10">
                     <div className=' flex flex-col justify-center items-center'>
                         <div className=' w-full h-64 relative'>
                             <Image
@@ -80,11 +80,11 @@ const ProfilePage = async ({ params }: { params: { username: string } }) => {
                                 <span className='font-medium'>Posts</span>
                             </div>
                             <div className=' font-semibold flex flex-col justify-center items-center gap-1'>
-                                <span className='font-semibold text-lg'>{user._count.followers} k</span>
+                                <span className='font-semibold text-lg'> {user._count.followings} k</span>
                                 <span className='font-medium'>Followers</span>
                             </div>
                             <div className=' font-semibold flex flex-col justify-center items-center gap-1'>
-                                <span className='font-semibold text-lg'>{user._count.followings}</span>
+                                <span className='font-semibold text-lg'>{user._count.followers} k</span>
                                 <span className='font-medium'>Following</span>
                             </div>
                         </div>

@@ -35,7 +35,13 @@ const UserMediaCard = async ({ user }: { user: User }) => {
                             />
                         </div>
                     ))
-                    : "No media found!"}
+                    : (
+                        <Card className='w-full border-none shadow-none flex flex-col justify-center items-center'>
+                            <CardContent className='mt-2'>
+                                No Media Found 😢
+                            </CardContent>
+                        </Card>
+                    )}
             </CardContent>
         </Card>
 
