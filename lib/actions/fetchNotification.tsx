@@ -7,7 +7,7 @@ import prisma from "../client"
 export const fetchNotifications = async () => {
     const { userId } = auth()
 
-    if (!userId) {
+    if (!userId || null) {
         throw new Error("User not authenticated")
     }
 
