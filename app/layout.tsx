@@ -29,10 +29,10 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <div className="w-full bg-card px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64">
+            <div className="w-full  px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64">
               <Navbar />
             </div>
-            <div className=" bg-[#f0f0f0] dark:bg-[#0a0c14] px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64">
+            <div className=" bg-background px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64">
               {children}
               <MobileMenu />
             </div>

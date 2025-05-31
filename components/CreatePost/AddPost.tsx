@@ -44,7 +44,7 @@ const AddPost = () => {
         <Card className=' flex rounded-lg  p-4 dark:border-white/40 flex-col border justify-center items-start gap-4'>
             <CardTitle className=' font-semibold self-start text-sm'>Add Post</CardTitle>
             <CardContent className=' relative flex gap-4 p-0 w-full justify-between items-center -mt-1'>
-                <form className='flex w-full gap-4' action={(formData) => addPost(formData, img || "")}>
+                <form className='flex flex-col items-start justify-between sm:flex-row w-full gap-4' action={(formData) => addPost(formData, img || "")}>
                     <Textarea
                         rows={4}
                         value={desc}
@@ -53,7 +53,7 @@ const AddPost = () => {
                         placeholder='What&apos;s on your mind?'
                         onChange={(e) => setDesc(e.target.value)}
                     />
-                    <div className=' flex flex-col gap-1 mt-4 justify-between'>
+                    <div className=' flex flex-row-reverse  sm:flex-col  w-full sm:w-auto sm:mt-4 items-center gap-4 sm:items-baseline'>
 
                         <Image
                             src='/emoji.png'
@@ -64,7 +64,7 @@ const AddPost = () => {
                             onClick={() => setShowEmoji(!showEmoji)}
                         />
                         {showEmoji && (
-                            <CardContent className=' z-20 absolute top-40 right-7 md:right-0 '>
+                            <CardContent className=' z-20 absolute top-12 right-7 md:right-0 '>
                                 <Picker
                                     data={data}
                                     emojiSize={20}
