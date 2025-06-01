@@ -1,34 +1,35 @@
 import prisma from '@/lib/client';
 import { auth } from '@clerk/nextjs/server';
 import React from 'react'
-
 import FriendRequestList from './FriendRequestList';
-import { Card, CardContent, CardDescription } from '../ui/card';
-
+import { Card, CardContent, CardHeader } from '../ui/card';
+import { UserPlus } from 'lucide-react';
 
 const FriendRequest = async () => {
-
     const { userId } = auth()
     if (!userId) return null;
 
     const requests = await prisma.followRequest.findMany({
-        where: {
-            receiverId: userId
-        },
-        include: {
-            sender: true
-        }
+        where: { receiverId: userId },
+        include: { sender: true }
     })
 
     if (requests.length === 0) return null
 
     return (
-        <Card className=' flex flex-col justify-between w-full items-center bg-card border gap-4 rounded-lg shadow-xl p-4'>
-            <CardContent className=' flex w-full justify-between items-center text-sm font-medium p-0'>
-                <CardDescription className='text-gray-500'>Friend Requests</CardDescription>
-                <span className=' text-primary '>See All</span>
+        <Card className="border-border/70 bg-card/50 rounded-xl shadow-sm">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
+                <div className="flex items-center gap-2">
+                    <UserPlus className="w-4 h-4 text-muted-foreground" />
+                    <h3 className="font-medium text-sm">Friend Requests</h3>
+                </div>
+                <button className="text-xs text-primary hover:text-primary/80 font-medium">
+                    See All
+                </button>
+            </CardHeader>
+            <CardContent className="space-y-3">
+                <FriendRequestList requests={requests} />
             </CardContent>
-            <FriendRequestList requests={requests} />
         </Card>
     )
 }

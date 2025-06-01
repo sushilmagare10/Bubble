@@ -4,6 +4,7 @@ import React, { useOptimistic, useState } from 'react'
 import { Button } from '../ui/button';
 import { switchFollow } from '@/lib/actions/switchFollow';
 import { switchBlock } from '@/lib/actions/switchBlock';
+import { UserPlus, UserMinus, Shield, ShieldOff } from 'lucide-react';
 
 const UserInfoCardInteraction = ({
     userId,
@@ -16,7 +17,6 @@ const UserInfoCardInteraction = ({
     isFollowing: boolean;
     isFollowingSent: boolean;
 }) => {
-
     const [userState, setUserState] = useState({
         following: isFollowing,
         blocked: isUserBlocked,
@@ -39,7 +39,6 @@ const UserInfoCardInteraction = ({
 
     const block = async () => {
         switchOptimisticState('block')
-
         try {
             await switchBlock(userId)
             setUserState(prev => ({
@@ -49,42 +48,80 @@ const UserInfoCardInteraction = ({
         } catch (error) {
             console.log(error)
         }
-
     }
 
-    //useOptimistic Hook
     const [optimisticState, switchOptimisticState] = useOptimistic(
-        userState, (state, value: "follow" | "block") => value === "follow" ? {
+        userState, 
+        (state, value: "follow" | "block") => value === "follow" ? {
             ...state,
             following: state.following && false,
             followingRequestSent: !state.following && !state.followingRequestSent ? true : false
         } : {
             ...state,
-            blockde: !state.blocked
+            blocked: !state.blocked
         }
     )
 
+    const getFollowButtonConfig = () => {
+        if (optimisticState.following) {
+            return { 
+                text: "Following", 
+                icon: UserMinus, 
+                variant: "outline" as const,
+                className: "border-border/50 hover:border-red-200 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/20"
+            }
+        }
+        if (optimisticState.followingRequestSent) {
+            return { 
+                text: "Request Sent", 
+                icon: UserPlus, 
+                variant: "outline" as const,
+                className: "border-border/50"
+            }
+        }
+        return { 
+            text: "Follow", 
+            icon: UserPlus, 
+            variant: "default" as const,
+            className: ""
+        }
+    }
+
+    const followConfig = getFollowButtonConfig()
+    const FollowIcon = followConfig.icon
+
     return (
-        <>
-            <form action={follow} className=' w-full flex justify-center flex-col gap-2'>
-                <Button className='w-full font-semibold text-white'>
-                    {
-                        optimisticState.following
-                            ? "Following"
-                            : optimisticState.followingRequestSent
-                                ? "Request Send"
-                                : "Follow"
-                    }
+        <div className="space-y-3 w-full">
+            <form action={follow}>
+                <Button 
+                    variant={followConfig.variant}
+                    className={`w-full ${followConfig.className}`}
+                >
+                    <FollowIcon className="w-4 h-4 mr-2" />
+                    {followConfig.text}
                 </Button>
             </form>
-            <form action={block} className=' self-end'>
-                <Button className=' bg-transparent hover:bg-white'>
-                    <span className=' text-red-400 text-end cursor-pointer text-sm'>
-                        {optimisticState.blocked ? "Unblock User" : "Block User"}
-                    </span>
+            
+            <form action={block}>
+                <Button 
+                    variant="ghost" 
+                    size="sm"
+                    className="w-full text-muted-foreground hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/20"
+                >
+                    {optimisticState.blocked ? (
+                        <>
+                            <ShieldOff className="w-4 h-4 mr-2" />
+                            Unblock User
+                        </>
+                    ) : (
+                        <>
+                            <Shield className="w-4 h-4 mr-2" />
+                            Block User
+                        </>
+                    )}
                 </Button>
             </form>
-        </>
+        </div>
     )
 }
 
