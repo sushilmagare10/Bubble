@@ -84,7 +84,7 @@ const NotificationModal = ({ isOpen, onClose, notifications, onMarkAsRead }: Not
                                             <Bell className="h-6 w-6 text-muted-foreground" />
                                         </div>
                                         <p className="text-sm text-muted-foreground font-medium">No notifications yet</p>
-                                        <p className="text-xs text-muted-foreground mt-1">We'll notify you when something happens</p>
+                                        <p className="text-xs text-muted-foreground mt-1">We&apos;ll notify you when something happens</p>
                                     </div>
                                 ) : (
                                     <div className="divide-y">

@@ -27,7 +27,7 @@ const AddPost = () => {
         return (
             <Card className="p-6">
                 <div className="flex items-center justify-center">
-                    <div className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-muted-foreground border-solid border-current border-e-transparent" />
+                    <div className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-muted-foreground border-solid border-e-transparent" />
                 </div>
             </Card>
         )
