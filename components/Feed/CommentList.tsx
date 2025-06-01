@@ -1,6 +1,5 @@
 "use client"
 
-
 import Image from 'next/image'
 import React, { useOptimistic, useState } from 'react'
 import { Input } from '../ui/input'
@@ -11,23 +10,19 @@ import { useUser } from '@clerk/nextjs'
 import { addComment } from '@/lib/actions/addComment'
 import Picker from '@emoji-mart/react'
 import data from '@emoji-mart/data'
-
 import { useTheme } from 'next-themes'
+import { Button } from '../ui/button'
 
 type CommentWithUser = Comment & { user: User };
 
-const CommentList = (
-    {
-        comments,
-        postId,
-    }: {
-        comments: CommentWithUser[];
-        postId: number;
-    }
-) => {
-
+const CommentList = ({
+    comments,
+    postId,
+}: {
+    comments: CommentWithUser[];
+    postId: number;
+}) => {
     const { user } = useUser()
-
     const [commentState, setCommentState] = useState(comments)
     const [desc, setDesc] = useState('')
     const [showEmoji, setShowEmoji] = useState(false)
@@ -41,7 +36,6 @@ const CommentList = (
     };
 
     const currentTheme = theme === 'system' ? systemTheme : theme
-
 
     const add = async () => {
         if (!user || !desc) return;
@@ -68,92 +62,124 @@ const CommentList = (
                 createdAt: new Date(Date.now()),
             },
         });
+        
         try {
             const createdComment = await addComment(postId, desc);
             setCommentState((prev) => [createdComment, ...prev]);
-        } catch (err) { }
+            setDesc(''); // Clear input after successful submission
+        } catch (err) {
+            console.error('Failed to add comment:', err);
+        }
     };
 
     const [optimistcComments, addOptimisticComment] = useOptimistic(
-        commentState, (state, value: CommentWithUser) => [value, ...state]
+        commentState, 
+        (state, value: CommentWithUser) => [value, ...state]
     )
 
     return (
-        <>
-            {user && (<div className='relative -mt-4'>
-                <div className='  flex justify-between items-center p-4 gap-4'>
-                    <Image
-                        src={user?.imageUrl || '/avatar.jpg'}
-                        alt='ProfilePic'
-                        width={36}
-                        height={36}
-                        className='w-9 h-9 object-cover rounded-full'
-                    />
-                    <form action={add} className=' flex-1 flex items-center justify-between bg-secondary rounded-full text-sm px-6  w-full'>
-                        <Input
-                            type='text'
-                            value={desc}
-                            placeholder='Write a comment...'
-                            className='bg-transparent outline-none flex-1 ring-0 border-none focus-visible:ring-none'
-                            onChange={e => setDesc(e.target.value)}
-                        />
+        <div className="space-y-4 pb-10 ">
+            {/* Comment Input */}
+            {user && (
+                <div className="relative">
+                    <div className="flex items-start gap-3 p-4">
                         <Image
-                            src="/emoji.png"
-                            alt=""
-                            width={16}
-                            height={16}
-                            className="cursor-pointer"
-                            onClick={() => setShowEmoji(!showEmoji)}
+                            src={user?.imageUrl || '/avatar.jpg'}
+                            alt="Your avatar"
+                            width={32}
+                            height={32}
+                            className="w-8 h-8 object-cover rounded-full flex-shrink-0"
                         />
-                        {showEmoji && (
-                            <div className=' z-20 absolute bottom-[95%] right-5 md:right-0 '>
-                                <Picker
-                                    data={data}
-                                    emojiSize={20}
-                                    onEmojiSelect={addEmoji}
-                                    maxFrequentRows={2}
-                                    theme={currentTheme === "dark" ? 'dark' : "light"}
+                        
+                        <form action={add} className="flex-1 relative">
+                            <div className="flex items-center bg-muted/30 rounded-xl p-2 gap-2">
+                                <Input
+                                    type="text"
+                                    value={desc}
+                                    placeholder="Write a comment..."
+                                    className="bg-transparent border-0 focus:outline-none  focus-visible:ring-0 text-sm rounded-xl flex-1 p-0"
+                                    onChange={e => setDesc(e.target.value)}
                                 />
+                                
+                                <button
+                                    type="button"
+                                    onClick={() => setShowEmoji(!showEmoji)}
+                                    className="p-1 hover:bg-muted/50 rounded-full transition-colors"
+                                >
+                                    <Image
+                                        src="/emoji.png"
+                                        alt="Add emoji"
+                                        width={16}
+                                        height={16}
+                                        className="w-4 h-4"
+                                    />
+                                </button>
                             </div>
-                        )}
-                    </form>
-                </div>
 
+                            {/* Emoji Picker */}
+                            {showEmoji && (
+                                <div className="absolute bottom-full right-0 mb-2 z-20">
+                                    <Picker
+                                        data={data}
+                                        emojiSize={20}
+                                        onEmojiSelect={addEmoji}
+                                        maxFrequentRows={2}
+                                        theme={currentTheme === "dark" ? 'dark' : "light"}
+                                    />
+                                </div>
+                            )}
+                        </form>
+                    </div>
+                </div>
+            )}
+
+            {/* Comments List */}
+            <div className="space-y-4">
                 {optimistcComments.map((comment) => (
-                    <div className=' flex gap-4 px-6 py-4 -mt-4' key={comment.id}>
+                    <div key={comment.id} className="flex gap-3 px-4">
                         <Image
                             src={comment.user.avatar || '/avatar.jpg'}
                             alt={comment.user.username}
-                            width={40}
-                            height={40}
-                            className='w-10 h-10 object-cover rounded-full'
+                            width={32}
+                            height={32}
+                            className="w-8 h-8 object-cover rounded-full flex-shrink-0"
                         />
-                        <div className=' flex flex-col self-start justify-center gap-2 text-gray-500'>
-                            <div className=' w-full flex justify-between items-center'>
-                                <span className=' text-base font-semibold self-start'>
+                        
+                        <div className="flex-1 space-y-2">
+                            {/* Comment Header */}
+                            <div className="flex items-center justify-between">
+                                <span className="font-medium text-sm text-foreground">
                                     {comment.user.name && comment.user.lastname
-                                        ? comment.user.name + " " + comment.user.lastname
-                                        : comment.user.username}
+                                        ? `${comment.user.name} ${comment.user.lastname}`
+                                        : comment.user.username
+                                    }
                                 </span>
-                                <MdMoreHoriz className='text-xl' />
+                                <Button variant="ghost" size="sm" className="h-6 w-6 p-0">
+                                    <MdMoreHoriz className="w-4 h-4 text-muted-foreground" />
+                                </Button>
                             </div>
-                            <p className='text-xs font-medium'>
+
+                            {/* Comment Content */}
+                            <p className="text-sm text-foreground">
                                 {comment.desc}
                             </p>
-                            <div className=' flex justify-start text-xs items-center gap-4'>
-                                <div className=' flex items-center gap-4 bg-secondary py-1 px-3 rounded-full'>
-                                    <FaRegHeart className=' fill-primary' />
-                                    <span className='text-gray-300'>|</span>
-                                    <span className=' text-gray-500'>87<span className=' hidden md:inline ml-2'>Likes</span></span>
+
+                            {/* Comment Actions */}
+                            <div className="flex items-center gap-4 text-xs">
+                                <div className="flex items-center gap-2 bg-muted/30 px-3 py-1 rounded-full">
+                                    <FaRegHeart className="w-3 h-3 text-muted-foreground" />
+                                    <span className="text-muted-foreground">87</span>
+                                    <span className="hidden md:inline text-muted-foreground">Likes</span>
                                 </div>
-                                <p className='text-gray-500 font-medium'>Replay</p>
+                                <button className="text-muted-foreground hover:text-foreground transition-colors font-medium">
+                                    Reply
+                                </button>
                             </div>
                         </div>
                     </div>
                 ))}
             </div>
-            )}
-        </>
+        </div>
     )
 }
 
