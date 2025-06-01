@@ -4,60 +4,77 @@ import { Button } from '../ui/button'
 import { auth } from '@clerk/nextjs/server'
 import prisma from '@/lib/client'
 import Link from 'next/link'
-import { Card, CardContent, CardTitle } from '../ui/card'
+import { Card, CardContent } from '../ui/card'
+import { Users } from 'lucide-react'
 
 const ProfileCard = async () => {
-
     const { userId } = auth()
     if (!userId) return null
 
     const user = await prisma.user.findFirst({
-        where: {
-            id: userId,
-        },
+        where: { id: userId },
         include: {
-            _count: {
-                select: {
-                    followers: true
-                }
-            }
+            _count: { select: { followers: true } }
         }
     })
 
     if (!user) return null
 
     return (
-        <Card className='flex flex-col justify-start items-center p-3 dark:border-white/40 rounded-lg h-64'>
-            <CardContent className=' relative  h-1/2 w-full '>
-                <Image
-                    src={user.cover || "/banner.jpg"}
-                    alt="Banner"
-                    className='rounded-md'
-                    fill />
+        <Card className="overflow-hidden border-border/70 bg-card/50 rounded-xl shadow-sm">
+            <CardContent className="p-0">
+                {/* Cover Image */}
+                <div className="relative h-20 w-full">
+                    <Image
+                        src={user.cover || "/banner.jpg"}
+                        alt="Cover"
+                        fill
+                        className="object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                </div>
 
-                {/* ProfilePic */}
+                {/* Profile Section */}
+                <div className="relative px-4 pb-4">
+                    {/* Profile Picture */}
+                    <div className="flex justify-center -mt-8 mb-4">
+                        <div className="relative">
+                            <Image
+                                src={user?.avatar || '/avatar.jpg'}
+                                alt='Profile'
+                                width={64}
+                                height={64}
+                                className='rounded-full object-cover border-4 border-background shadow-lg'
+                            />
+                        </div>
+                    </div>
 
-                <Image
-                    src={user?.avatar || '/avatar.jpg'}
-                    alt='profilePic'
-                    className='rounded-full object-cover w-16 h-16 absolute left-0 right-0 m-auto -bottom-7 ring-1 ring-white z-10'
-                    width={64}
-                    height={64}
-                    quality={100}
-                />
+                    {/* User Info */}
+                    <div className="text-center space-y-3">
+                        <div>
+                            <h3 className="font-semibold text-foreground">
+                                {(user.name && user.lastname) ? 
+                                    `${user.name} ${user.lastname}` : 
+                                    user.username
+                                }
+                            </h3>
+                            <p className="text-sm text-muted-foreground">@{user.username}</p>
+                        </div>
 
-            </CardContent>
-            {/* user info */}
-            <CardContent className=' w-full flex p-0 flex-col justify-between items-center'>
-                <CardTitle className='text-lg font-semibold mt-9'>
-                    {(user.name && user.lastname) ? user.name + " " + user.lastname : user.username}
-                </CardTitle>
-                <div>{user._count.followers}</div>
-                <Link href={`/profile/${user.username}`} className=' w-full'>
-                    <Button className='w-full mt-4 bg-primary text-white font-semibold tracking-wide'>
-                        Profile
-                    </Button>
-                </Link>
+                        {/* Followers Count */}
+                        <div className="flex items-center justify-center gap-1 text-sm text-muted-foreground">
+                            <Users className="w-4 h-4" />
+                            <span>{user._count.followers} followers</span>
+                        </div>
+
+                        {/* Profile Button */}
+                        <Link href={`/profile/${user.username}`} className="block">
+                            <Button className="w-full" size="sm">
+                                View Profile
+                            </Button>
+                        </Link>
+                    </div>
+                </div>
             </CardContent>
         </Card>
     )

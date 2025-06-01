@@ -1,31 +1,56 @@
 import Link from 'next/link'
 import React from 'react'
-import { MdInsertPhoto } from "react-icons/md";
-import { FaYoutube } from "react-icons/fa";
-import { BsSave2Fill } from "react-icons/bs";
-import { IoSettings } from "react-icons/io5";
+import { Users, Compass, Bookmark, Settings } from 'lucide-react'
+import { Card, CardContent } from '../ui/card'
 
 const LeftSidebarNav = () => {
-    return (
-        <div className=' flex flex-col justify-center items-start gap-6 py-4 bg-card border dark:border-white/40 rounded-lg shadow-md'>
-            <Link href='/posts' className='flex justify-around items-center gap-3 ml-6'>
-                <MdInsertPhoto className='text-blue-500 text-xl' />
-                <p className='text-sm font-medium'>My Posts</p>
-            </Link>
-            <Link href='/videos' className='flex justify-between items-center gap-3 ml-6'>
-                <FaYoutube className=' text-rose-500 text-xl' />
-                <p className='text-sm font-medium'>Videos</p>
-            </Link>
-            <Link href='/pages' className='flex justify-between items-center gap-3 ml-6'>
-                <BsSave2Fill className=' text-green-500 text-lg ' />
-                <p className='text-sm font-medium'>Saved</p>
-            </Link>
-            <Link href='/setting' className='flex justify-between items-center gap-3 ml-6'>
-                <IoSettings className='text-rose-500 text-xl' />
-                <p className='text-sm font-medium'>Setting</p>
-            </Link>
+    const navItems = [
+        { 
+            href: '/profile/friends', 
+            icon: Users, 
+            label: 'Friends', 
+        },
+        { 
+            href: '/search-users', 
+            icon: Compass, 
+            label: 'Discover', 
+        },
+        { 
+            href: '/saved', 
+            icon: Bookmark, 
+            label: 'Saved', 
+        },
+        { 
+            href: '/settings', 
+            icon: Settings, 
+            label: 'Settings', 
+        },
+    ]
 
-        </div>
+    return (
+        <Card className="bg-card/50 border-border/70 shadow-sm rounded-xl">
+            <CardContent className="p-4">
+                <nav className="space-y-2">
+                    {navItems.map((item) => (
+                        <Link
+                            key={item.href}
+                            href={item.href}
+                            className="group relative flex items-center gap-4 px-4 py-3 text-sm rounded-xl transition-all duration-200 hover:bg-neutral-900 hover:shadow-sm border border-transparent hover:border-border/50"
+                        >
+                            <div className="relative">
+                                <item.icon className="w-5 h-5 text-muted-foreground group-hover:text-foreground transition-colors duration-200 group-hover:scale-105" />
+                                <div className="absolute inset-0 bg-primary/10 rounded-full scale-0 group-hover:scale-150 transition-transform duration-300 -z-10" />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                                <div className="font-medium text-foreground/90 group-hover:text-foreground transition-colors">
+                                    {item.label}
+                                </div>
+                            </div>
+                        </Link>
+                    ))}
+                </nav>
+            </CardContent>
+        </Card>
     )
 }
 
