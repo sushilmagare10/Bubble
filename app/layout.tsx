@@ -5,6 +5,7 @@ import Navbar from "@/components/Navigation/Navbar";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ThemeProvider } from "@/components/theme-provider"
 import MobileMenu from "@/components/Navigation/MobileMenu";
+import { Toaster } from "@/components/ui/sonner"
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -22,8 +23,8 @@ export default function RootLayout({
   
   return (
     <ClerkProvider>
-      <html lang="en">
-        <body className={inter.className}>
+      <html lang="en" suppressHydrationWarning>
+        <body className={`${inter.className}  bg-background`}>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
@@ -33,10 +34,11 @@ export default function RootLayout({
             <div className="w-full  px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64">
               <Navbar />
             </div>
-            <div className=" bg-background px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64">
+            <div className=" px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64">
               {children}
               <MobileMenu />
             </div>
+            <Toaster />
           </ThemeProvider>
         </body>
       </html>
