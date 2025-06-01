@@ -34,15 +34,15 @@ const StoryModal = ({ isOpen, onClose, story }: StoryModalProps) => {
     }, [isOpen, onClose]);
 
     return (
-        <div className="fixed inset-0 z-50 bg-black/65 flex flex-col items-center justify-center rounded-xl">
-            <div className="w-full h-full max-w-3xl  bg-black flex flex-col rounded-xl m-4">
+        <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex flex-col items-center justify-center rounded-xl">
+            <div className="w-full p-4 max-w-3xl h-[85vh] border-2 border-border/70 bg-black flex flex-col rounded-xl m-4">
                 <div className="w-full h-1  bg-gray-700 mb-3 sm:mb-4">
                     <div
                         className={`h-full  w-full bg-primary ${isAnimating ? 'animate-progress' : ''}`}
                         style={{ animationDuration: '10s' }}
                     />
                 </div>
-                <div className="relative flex-grow flex items-center justify-center">
+                <div className="relative border-white flex-grow flex items-center justify-center">
                     <Image
                         src={story.img}
                         alt={story.user.username}
@@ -52,7 +52,9 @@ const StoryModal = ({ isOpen, onClose, story }: StoryModalProps) => {
                     />
                     <Button
                         onClick={onClose}
-                        className="absolute top-3 rounded-full right-2 sm:top-4 sm:right-4 text-white hover:text-gray-300 z-10"
+                        variant='outline'
+                        size='sm'
+                        className="absolute top-3 rounded-full right-2 sm:top-4 sm:right-4 text-white hover:text-neutral-300 z-10"
                     >
                         X
                     </Button>

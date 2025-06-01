@@ -1,6 +1,5 @@
 "use client"
 
-
 import React, { useState } from 'react'
 import { Textarea } from '../ui/textarea'
 import Image from 'next/image'
@@ -8,19 +7,16 @@ import { FaSquarePollHorizontal } from "react-icons/fa6";
 import { MdInsertPhoto } from "react-icons/md";
 import { FaYoutube } from "react-icons/fa";
 import { BsCalendar2EventFill } from "react-icons/bs";
-import { Card, CardContent, CardDescription, CardTitle } from '../ui/card';
+import { Card, CardContent } from '../ui/card';
 import { useUser } from '@clerk/nextjs';
 import Picker from '@emoji-mart/react'
 import data from '@emoji-mart/data'
 import { CldUploadWidget } from 'next-cloudinary';
-
 import { useTheme } from 'next-themes'
 import { addPost } from '@/lib/actions/addPost';
 import AddPostButton from './AddPostButton';
 
-
 const AddPost = () => {
-
     const { isLoaded, user } = useUser()
     const [desc, setDesc] = useState('')
     const [img, setImg] = useState<any>()
@@ -28,7 +24,13 @@ const AddPost = () => {
     const { theme, systemTheme } = useTheme()
 
     if (!isLoaded) {
-        return (<div className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-gray-500 border-solid border-current border-e-transparent align-[-0.125em] text-surface motion-reduce:animate-[spin_1.5s_linear_infinite] dark:text-white" />)
+        return (
+            <Card className="p-6">
+                <div className="flex items-center justify-center">
+                    <div className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-muted-foreground border-solid border-current border-e-transparent" />
+                </div>
+            </Card>
+        )
     }
 
     const addEmoji = (e: any) => {
@@ -41,30 +43,53 @@ const AddPost = () => {
     const currentTheme = theme === 'system' ? systemTheme : theme
 
     return (
-        <Card className=' flex rounded-lg  p-4 dark:border-white/40 flex-col border justify-center items-start gap-4'>
-            <CardTitle className=' font-semibold self-start text-sm'>Add Post</CardTitle>
-            <CardContent className=' relative flex gap-4 p-0 w-full justify-between items-center -mt-1'>
-                <form className='flex flex-col items-start justify-between sm:flex-row w-full gap-4' action={(formData) => addPost(formData, img || "")}>
-                    <Textarea
-                        rows={4}
-                        value={desc}
-                        name='description'
-                        className='rounded-lg'
-                        placeholder='What&apos;s on your mind?'
-                        onChange={(e) => setDesc(e.target.value)}
+        <Card className="border-border/70 bg-card/50 rounded-xl shadow-sm">
+            <CardContent className="p-6 space-y-4">
+                {/* Header */}
+                <div className="flex items-center gap-3">
+                    <Image
+                        src={user?.imageUrl || '/avatar.jpg'}
+                        alt="Your avatar"
+                        width={40}
+                        height={40}
+                        className="w-10 h-10 rounded-full object-cover"
                     />
-                    <div className=' flex flex-row-reverse  sm:flex-col  w-full sm:w-auto sm:mt-4 items-center gap-4 sm:items-baseline'>
+                    <span className="font-medium text-foreground">What&apos;s on your mind?</span>
+                </div>
 
-                        <Image
-                            src='/emoji.png'
-                            alt='emoji'
-                            width={20}
-                            height={20}
-                            className="w-5 h-5 cursor-pointer "
-                            onClick={() => setShowEmoji(!showEmoji)}
+                {/* Form */}
+                <form 
+                    className="space-y-4" 
+                    action={(formData) => addPost(formData, img || "")}
+                >
+                    <div className="relative">
+                        <Textarea
+                            rows={3}
+                            value={desc}
+                            name="description"
+                            className="resize-none rounded-xl border-0 bg-muted/30 focus-visible:ring-1 focus-visible:ring-ring"
+                            placeholder="Share your thoughts..."
+                            onChange={(e) => setDesc(e.target.value)}
                         />
+                        
+                        {/* Emoji Picker Toggle */}
+                        <button
+                            type="button"
+                            onClick={() => setShowEmoji(!showEmoji)}
+                            className="absolute bottom-3 right-3 p-1 hover:bg-muted/50 rounded-full transition-colors"
+                        >
+                            <Image
+                                src="/emoji.png"
+                                alt="Add emoji"
+                                width={20}
+                                height={20}
+                                className="w-5 h-5"
+                            />
+                        </button>
+
+                        {/* Emoji Picker */}
                         {showEmoji && (
-                            <CardContent className=' z-20 absolute top-12 right-7 md:right-0 '>
+                            <div className="absolute top-full right-0 mt-2 z-20">
                                 <Picker
                                     data={data}
                                     emojiSize={20}
@@ -72,56 +97,66 @@ const AddPost = () => {
                                     maxFrequentRows={2}
                                     theme={currentTheme === "dark" ? 'dark' : "light"}
                                 />
-                            </CardContent>
+                            </div>
                         )}
+                    </div>
+
+                    {/* Actions Row */}
+                    <div className="flex items-center justify-between pt-2">
+                        <div className="flex items-center gap-4">
+                            {/* Photo Upload */}
+                            <CldUploadWidget
+                                uploadPreset="Bubble_social"
+                                onSuccess={(result: any, { widget }) => {
+                                    if (result.info && result.info.secure_url) {
+                                        setImg(result.info.secure_url);
+                                    }
+                                    widget.close()
+                                }}
+                            >
+                                {({ open }) => (
+                                    <button
+                                        type="button"
+                                        onClick={() => open()}
+                                        className="flex items-center gap-2 px-3 py-1.5 rounded-full hover:bg-muted/50 transition-colors text-sm font-medium"
+                                    >
+                                        <MdInsertPhoto className="w-4 h-4 text-blue-500" />
+                                        <span className="text-muted-foreground">Photo</span>
+                                    </button>
+                                )}
+                            </CldUploadWidget>
+
+                            {/* Video */}
+                            <button
+                                type="button"
+                                className="flex items-center gap-2 px-3 py-1.5 rounded-full hover:bg-muted/50 transition-colors text-sm font-medium"
+                            >
+                                <FaYoutube className="w-4 h-4 text-red-500" />
+                                <span className="text-muted-foreground">Video</span>
+                            </button>
+
+                            {/* Poll */}
+                            <button
+                                type="button"
+                                className="flex items-center gap-2 px-3 py-1.5 rounded-full hover:bg-muted/50 transition-colors text-sm font-medium"
+                            >
+                                <FaSquarePollHorizontal className="w-4 h-4 text-green-500" />
+                                <span className="text-muted-foreground">Poll</span>
+                            </button>
+
+                            {/* Event */}
+                            <button
+                                type="button"
+                                className="flex items-center gap-2 px-3 py-1.5 rounded-full hover:bg-muted/50 transition-colors text-sm font-medium"
+                            >
+                                <BsCalendar2EventFill className="w-4 h-4 text-purple-500" />
+                                <span className="text-muted-foreground">Event</span>
+                            </button>
+                        </div>
+
                         <AddPostButton />
                     </div>
                 </form>
-            </CardContent>
-            <CardContent className=' flex justify-between p-0 items-center gap-8'>
-                <div className=' flex justify-center items-center gap-2 cursor-pointer'>
-                    <CldUploadWidget
-                        uploadPreset="Bubble_social"
-                        onSuccess={(result: any, { widget }) => {
-                            if (result.info && result.info.secure_url) {
-                                setImg(result.info.secure_url);
-                            };
-                            widget.close()
-                        }}
-                    >
-                        {({ open }) => {
-                            return (
-                                <>
-                                    <CardDescription className=' flex items-center gap-2 cursor-pointer font-semibold'
-                                        onClick={() => open()}
-                                    >
-                                        Photo
-                                        <MdInsertPhoto className=' text-blue-500 text-xl' />
-                                    </CardDescription>
-                                </>
-                            );
-                        }}
-                    </CldUploadWidget>
-
-                </div>
-                <div className=' flex justify-center items-center gap-2 cursor-pointer'>
-                    <CardDescription className='font-semibold'>
-                        Video
-                    </CardDescription>
-                    <FaYoutube className=' text-rose-500 text-xl' />
-                </div>
-                <div className=' flex justify-center items-center gap-2 cursor-pointer'>
-                    <CardDescription className='font-semibold'>
-                        Poll
-                    </CardDescription>
-                    <FaSquarePollHorizontal className=' text-green-500 text-xl' />
-                </div>
-                <div className=' flex justify-center items-center gap-2 cursor-pointer'>
-                    <CardDescription className='font-medium'>
-                        Event
-                    </CardDescription>
-                    <BsCalendar2EventFill className=' text-fuchsia-500 text-xl' />
-                </div>
             </CardContent>
         </Card>
     )
