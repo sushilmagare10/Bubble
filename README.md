@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+Complete overview of a modern social media app built for great user experience, performance, and scalability. It uses a solid stack of current web technologies and offers essential features like user authentication, profile management, content sharing (posts and stories), and social interaction.
 
-First, run the development server:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Demo
+https://bubble-bay.vercel.app/
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Key Technologies Used
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Authentication: **Clerk** is used for secure and smooth user authentication — handling sign-up, login, and session management.
+- Database/ORM: **Prisma** is used as the ORM, working with **Neon**, a serverless PostgreSQL platform, to provide scalable database access.
+- Cloud Storage: **Cloudinary** handles media storage and delivery (profile pictures, post images/videos, story content), with optimization built in.
+- UI Components: **Shadcn/ui** offers well-designed and accessible UI components for a polished interface.
+- Backend Logic: Server Actions from Next.js are used for handling data operations on the server directly from components.
+- User Provisioning: Clerk Webhooks ensure that users are automatically added to the database (Prisma + Neon) after signing up.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Core Features
 
-## Learn More
+**User Authentication**
+- Sign-up and login using Clerk.
+- Secure session management.
+- Supports multiple sign-in methods (email/password, social logins).
 
-To learn more about Next.js, take a look at the following resources:
+**Profile Management**
+- Users can manage their profile photo, cover photo, bio, and other personal info.
+- Profile editing is available to the owner.
+- Others can follow or block the user.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**Content Posting**
+- Users can share posts with text and media (uploaded via Cloudinary).
+- Posts show up in profile feeds and can be liked or commented on.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+**Post Interactions**
+- Users can like and comment on posts.
+- Real-time updates to like and comment counts.
+- Users receive notifications when someone likes or comments on their post, keeping them engaged.
+- Typically implemented using WebSockets and server-side logic to track changes in the database.
 
-## Deploy on Vercel
+**Stories**
+- Users can post temporary stories (images or videos) that disappear after a set time.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+**Social Connections**
+- Users can search for and connect with others.
+- Follow/unfollow functionality.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+**Light and Dark Mode**
+- App supports both light and dark themes.
+- Users can toggle between themes for comfort and accessibility.
