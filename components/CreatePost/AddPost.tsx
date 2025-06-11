@@ -27,7 +27,7 @@ const AddPost = () => {
         return (
             <Card className="p-6">
                 <div className="flex items-center justify-center">
-                    <div className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-muted-foreground border-solid border-e-transparent" />
+                    <div className="inline-block h-4 w-4 animate-spin rounded-full border border-border/70" />
                 </div>
             </Card>
         )
@@ -43,7 +43,7 @@ const AddPost = () => {
     const currentTheme = theme === 'system' ? systemTheme : theme
 
     return (
-        <Card className="border-border/70 bg-card/50 rounded-xl shadow-sm">
+        <Card className="border-border/70 flex flex-col bg-card/50 rounded-xl shadow-sm">
             <CardContent className="p-6 space-y-4">
                 {/* Header */}
                 <div className="flex items-center gap-3">
@@ -59,7 +59,7 @@ const AddPost = () => {
 
                 {/* Form */}
                 <form 
-                    className="space-y-4" 
+                    className="space-y-4 " 
                     action={(formData) => addPost(formData, img || "")}
                 >
                     <div className="relative">
@@ -102,7 +102,7 @@ const AddPost = () => {
                     </div>
 
                     {/* Actions Row */}
-                    <div className="flex items-center justify-between pt-2">
+                    <div className="flex items-center justify-between flex-wrap pt-2">
                         <div className="flex items-center gap-4">
                             {/* Photo Upload */}
                             <CldUploadWidget

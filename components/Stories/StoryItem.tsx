@@ -85,12 +85,11 @@ const StoryItem = ({
                     return (
                         <div className="flex flex-col items-center gap-3 cursor-pointer group">
                             <div className="relative">
-                                <div className="w-20 h-20 rounded-full overflow-hidden border-2 border-dashed border-muted-foreground/30 group-hover:border-primary/50 transition-colors duration-200">
+                                <div className="relative size-14 md:size-20 rounded-full overflow-hidden border-2 border-dashed border-muted-foreground/30 group-hover:border-primary/50 transition-colors duration-200">
                                     <Image
                                         src={img?.secure_url || user?.imageUrl || "/avatar.jpg"}
                                         alt=""
-                                        width={80}
-                                        height={80}
+                                      fill
                                         className="w-full h-full object-cover"
                                     />
                                 </div>
@@ -124,12 +123,11 @@ const StoryItem = ({
                     onClick={() => openStoryModal(story)}
                 >
                     <div className="relative">
-                        <div className="w-20 h-20 rounded-full overflow-hidden border-2 border-primary/20 group-hover:border-primary/60 transition-colors duration-200">
+                        <div className="relative size-16 md:size-20 rounded-full overflow-hidden border-2 border-primary/20 group-hover:border-primary/60 transition-colors duration-200">
                             <Image
                                 src={story.img || "/avatar.jpg"}
                                 alt=""
-                                width={80}
-                                height={80}
+                                fill
                                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
                             />
                         </div>

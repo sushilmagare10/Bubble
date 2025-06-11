@@ -35,14 +35,14 @@ const LeftSidebarNav = () => {
                         <Link
                             key={item.href}
                             href={item.href}
-                            className="group relative flex items-center gap-4 px-4 py-3 text-sm rounded-xl transition-all duration-200 hover:bg-neutral-900 hover:shadow-sm border border-transparent hover:border-border/50"
+                            className="group relative flex items-center gap-4 px-4 py-3 text-sm rounded-xl transition-all duration-200 hover:bg-neutral-100 dark:hover:bg-neutral-900 hover:shadow-sm border border-transparent hover:border-border/50"
                         >
                             <div className="relative">
-                                <item.icon className="w-5 h-5 text-muted-foreground group-hover:text-foreground transition-colors duration-200 group-hover:scale-105" />
+                                <item.icon className="size-4 text-muted-foreground group-hover:text-foreground transition-colors duration-200 group-hover:scale-105" />
                                 <div className="absolute inset-0 bg-primary/10 rounded-full scale-0 group-hover:scale-150 transition-transform duration-300 -z-10" />
                             </div>
                             <div className="flex-1 min-w-0">
-                                <div className="font-medium text-foreground/90 group-hover:text-foreground transition-colors">
+                                <div className="text-sm  text-foreground/90 group-hover:text-foreground transition-colors">
                                     {item.label}
                                 </div>
                             </div>

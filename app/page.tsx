@@ -4,8 +4,19 @@ import LeftSidebar from "@/components/LeftSidebar/LeftSidebar";
 import RightSidebar from "@/components/RightSidebar/RightSidebar";
 import Image from "next/image";
 import AddPost from "@/components/CreatePost/AddPost";
+import { redirect } from "next/navigation";
+import prisma from "@/lib/client";
+import { auth } from "@clerk/nextjs/server";
 
-export default function Home() {
+export default async function Home() {
+
+  const { userId } = auth();
+  
+  if (!userId) {
+    redirect("/sign-in");
+  }
+
+
   return (
     <main className="flex justify-between gap-6 pt-6 ">
       <aside className="hidden md:block xl:w-[20%] h-full sticky top-4">
